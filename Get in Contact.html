@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    
+    <section class="header-getinco">
+       <nav>
+            <a href="index.html"><img src="images/logo1.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <h1>RA/QM Consultancy</h1> 
+                <h2>Contact</h2>
+                <ul>
+                    <li><a href="Home.html">Home</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+    </section>
+
+    <section class="career">
+        <div class="questionnaire">
+            <h2>Contact Form</h2>
+            <form action="process_form.php" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+    
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+    
+                <label for="organization">Organization:</label>
+                <input type="text" id="organization" name="organization">
+    
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+    
+                <label for="consentbox">
+                    <input type="checkbox" id="consentbox" name="consentbox" required>
+                    <p1>Hereby consent to the processing of the personal data that I have provided and  declare <br> my agreement with the data protection regulations in the data privacy statement below.</p1>
+                </label>
+        <br> </br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <h1>Wanna work with me?<br>Use the contact form to contact me</br></h1>
+        <p></p>
+    
+        <div class="row">
+            <div class="career-col">
+                <h3>Who we are</h3>
+                <p>At RA/QM Consultancy, we are architects of innovation in healthcare technology. Specializing in Software as a Medical Device (SaMD), we leverage our expertise to drive positive change in patient care. We craft solutions that transcend industry standards.</p>
+            </div>
+            <div class="career-col">
+                <h3>Who are we looking for?</h3>
+                <p>In addition to the current vacancies, we are always looking for new colleagues at all levels of experience - from interns to project managers.
+                    If our culture appeals to you and you have knowledge and experience that would be a good fit for us, then get in touch.</p>
+            </div>
+            <div class="career-col">
+                <h3>RA Junior/QM Junior</h3>
+                <p>For the Regulatory and QM Complicane we are looking for you as an experienced RA and QM-Manager (m/f/d*) in part-time or as a working student to shape the digital future of healthcare with us.</p>
+                <p>link um auf career seite zu kommen</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="about-us">
+        <div class="footer-banner">
+            <div class="footer">
+                <h4>About US</h4>
+                <p>Georg Büchner Straße 19 <br> 64347 Grießheim</br> </p>
+                <div class="icons">
+                    <a href="mailto:raqmconsultancy@gmail.com" target="_blank"><i class="far fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/nicolas-peters-saa-635a501bb" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://twitter.com/nodolas" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="tel:+49 17657963493"><i class="fa fa-mobile"></i></a>
+                </div>
+                <p>Made by<i class="footer"><img src="images/logo.png"></i>KMU</p> 
+            </div> 
+        </div>      
+    </section>
+    
