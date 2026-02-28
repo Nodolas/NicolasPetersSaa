@@ -1,0 +1,13 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "description": "Simple personal portfolio with live WebGL background and animations.",
+  "scripts": {
+    "start": "live-server --open=./index.html",
+    "serve": "npx http-server -c-1 -p 8080"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "http-server": "^14.1.1"
+  }
+}

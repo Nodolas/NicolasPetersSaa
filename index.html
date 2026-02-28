@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Innovation & AI Engineer</title>
+    <style>
+        :root {
+            --bg: #030508;
+            --text: #edf5ff;
+            --text-dim: #8db8cc;
+            --accent: #00d4ff;
+            --accent2: #00e887;
+            --accent3: #00d4ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ---- Custom Cursor ---- */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.25s, height 0.25s, border-color 0.25s, background 0.25s;
+        }
+        .cursor.hover {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--accent2);
+        }
+        .cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ---- WebGL Canvas ---- */
+        #scene {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ---- Navigation ---- */
+        nav {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(3, 5, 8, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 212, 255, 0.08);
+            border-radius: 60px;
+            padding: 10px 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+        nav ul { list-style: none; display: flex; gap: 4px; }
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.3s;
+            display: block;
+        }
+        nav a:hover, nav a.active {
+            color: #fff;
+            background: rgba(0, 212, 255, 0.12);
+        }
+
+        /* ---- Sections ---- */
+        section {
+            position: relative;
+            z-index: 10;
+            padding: 120px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .hero-inner {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 440px;
+            gap: 60px;
+            align-items: start;
+        }
+        #scramble-target {
+            display: inline-block;
+            min-width: 12ch;
+            overflow: hidden;
+        }
+        .hero-content { min-width: 0; max-width: 620px; }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 255, 0.07);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+        .eyebrow-dot {
+            width: 7px; height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 5.5vw, 72px);
+            font-weight: 800;
+            line-height: 1.08;
+            margin-bottom: 24px;
+            letter-spacing: -1.5px;
+        }
+        .hero h1 .line { display: block; }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(16px, 1.8vw, 19px);
+            color: rgba(237, 245, 255, 0.8);
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.3px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #030508;
+            box-shadow: 0 4px 24px rgba(0, 212, 255, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.45);
+        }
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Social proof */
+        .social-proof {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .social-proof .metric { text-align: left; }
+        .social-proof .metric .number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .social-proof .metric .label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .social-proof .divider {
+            width: 1px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Hero visual */
+        .hero-visual {
+            flex: 0 0 440px;
+            width: 440px;
+            position: relative;
+        }
+        .hero-shape {
+            width: 420px;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(0, 212, 255, 0.22);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.1), 0 24px 64px rgba(0,0,0,0.4);
+        }
+        .hero-shape-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            background: transparent;
+        }
+        .hero-shape-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+
+        /* ---- Section Headers ---- */
+        .section-head {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .section-head h2 {
+            font-size: clamp(32px, 4.5vw, 52px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+        .section-head h2 .gradient-text {
+            background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-head p {
+            font-size: 17px;
+            color: var(--text-dim);
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* ---- Cards ---- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 212, 255, 0.06), transparent 40%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+        }
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        /* Experience card structured layout */
+        .exp-company {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        .exp-meta {
+            color: var(--text-dim);
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+        .exp-desc {
+            color: rgba(237, 245, 255, 0.88);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .card p {
+            color: rgba(237, 245, 255, 0.75);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.08);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 3px;
+        }
+
+        /* ---- About ---- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        .about-text h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .about-text p {
+            color: rgba(237, 245, 255, 0.82);
+            margin-bottom: 16px;
+            font-size: 15px;
+        }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: rgba(0,212,255,0.2);
+            transform: translateY(-2px);
+        }
+        .stat-card .num {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* ---- Contact ---- */
+        .contact-section { text-align: center; padding-bottom: 80px; }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        /* ---- Footer ---- */
+        footer {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-dim);
+            font-size: 13px;
+            position: relative;
+            z-index: 10;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        /* ---- Scroll reveal ---- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ---- Certifications ---- */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .cert-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+        }
+        .cert-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,212,255,0.25);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+        }
+        .cert-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0,212,255,0.04), rgba(0,232,135,0.04));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cert-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
+            transition: transform 0.4s ease;
+        }
+        .cert-card:hover .cert-img-wrap img { transform: scale(1.04); }
+        .cert-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(3,5,8,0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(4px);
+        }
+        .cert-card:hover .cert-overlay { opacity: 1; }
+        .cert-overlay span {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 8px 20px;
+            border-radius: 40px;
+        }
+        .cert-no-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(0,232,135,0.06));
+        }
+        .cert-no-img svg { opacity: 0.4; }
+        .cert-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cert-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+        .cert-issuer {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        .cert-year {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+        .cert-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .cert-link {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .cert-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ---- Working On ---- */
+        .wip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .wip-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .wip-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .wip-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,212,255,0.2);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+        }
+        .wip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,212,255,0.08);
+            border: 1px solid rgba(0,212,255,0.2);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .wip-dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        .wip-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .wip-card .wip-issuer { font-size: 13px; color: var(--text-dim); margin-bottom: 16px; }
+        .wip-progress-wrap { margin-top: 8px; }
+        .wip-progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+        .wip-bar-bg {
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .wip-bar {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            transition: width 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .wip-bar-animated { width: 0 !important; }
+        .wip-bar-animated.animate { width: var(--target-w) !important; }
+
+        /* ---- Lightbox ---- */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            background: rgba(2,4,8,0.96);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .lightbox.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox-inner {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .lightbox-inner img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+        }
+        .lightbox-title {
+            font-size: 14px;
+            color: var(--text-dim);
+            text-align: center;
+        }
+        .lightbox-actions { display: flex; gap: 10px; }
+        .lightbox-close {
+            position: absolute;
+            top: -48px;
+            right: 0;
+            width: 36px; height: 36px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.12); }
+
+        /* ---- Cursor: disabled ---- */
+        .cursor, .cursor-dot { display: none !important; }
+
+        /* ---- Certificate Art Previews ---- */
+        .cert-art-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+        .cert-art {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+        .cert-card:hover .cert-art { transform: scale(1.02); }
+        .cert-art::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+        .cert-art-gold { background: linear-gradient(145deg, #120e00, #1e1600, #261c00); }
+        .cert-art-blue { background: linear-gradient(145deg, #00060f, #001225, #001830); }
+        .cert-art-teal { background: linear-gradient(145deg, #000e0a, #001a14, #00221a); }
+        .cert-art-cisco { background: linear-gradient(145deg, #001008, #001e10, #002818); }
+        .cert-art-cisco .cert-art-abbr { color: #00b87a; }
+        .cert-art-cisco svg { color: #00b87a; }
+        .cert-art-abbr {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .cert-art-gold .cert-art-abbr { color: #d4a835; }
+        .cert-art-blue .cert-art-abbr { color: #3ea6ff; }
+        .cert-art-teal .cert-art-abbr { color: #00c894; }
+        .cert-art-divider { width: 44px; height: 1px; background: rgba(255,255,255,0.14); }
+        .cert-art-sub {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+            line-height: 1.7;
+            max-width: 160px;
+        }
+        .cert-art-gold svg { color: #d4a835; }
+        .cert-art-blue svg { color: #3ea6ff; }
+        .cert-art-teal svg { color: #00c894; }
+
+        /* ---- Self-Employment / Freelance Section ---- */
+        .freelance-section { overflow: hidden; }
+        .node-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .section-inner { position: relative; z-index: 1; }
+        .freelance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .freelance-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 36px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .freelance-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, rgba(180,190,200,0.4), rgba(140,155,170,0.15), transparent);
+        }
+        .freelance-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(160,175,190,0.18);
+            box-shadow: 0 20px 56px rgba(0,0,0,0.5);
+        }
+        .freelance-co {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #b8c8d8;
+            margin-bottom: 2px;
+        }
+        .freelance-role {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(184,200,216,0.65);
+            margin-bottom: 14px;
+        }
+        .freelance-url {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.07);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            transition: all 0.2s;
+        }
+        .freelance-url:hover { color: #b8c8d8; border-color: rgba(180,195,210,0.22); }
+        .freelance-desc {
+            color: var(--text-dim);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 900px) {
+            .hero-inner { flex-direction: column; text-align: center; }
+            .hero-content { max-width: 100%; }
+            .hero .subtitle { margin-left: auto; margin-right: auto; }
+            .hero-cta { justify-content: center; }
+            .social-proof { justify-content: center; }
+            .hero-visual { display: none; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            nav { padding: 8px 6px; }
+            nav a { font-size: 12px; padding: 6px 12px; }
+        }
+        @media (max-width: 600px) {
+            section { padding: 80px 16px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+
+<nav id="nav">
+    <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#freelance">Freelance</a></li>
+        <li><a href="#working-on">Working On</a></li>
+        <li><a href="#certifications">Certs</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="hero">
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="eyebrow-dot"></span>
+                Innovation Management & AI Engineering
+            </div>
+            <h1>
+                <span class="line">Building the</span>
+                <span class="line"><span class="gradient-text" id="scramble-target">Future with AI</span></span>
+            </h1>
+            <p class="subtitle">Master's student crafting AI-powered products and intelligent automation. Turning research into real-world solutions.</p>
+            <div class="hero-cta">
+                <a href="#working-on" class="btn btn-primary">What I'm Building <span>&rarr;</span></a>
+                <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+            </div>
+            <div class="social-proof">
+                <div class="metric">
+                    <div class="number" data-count="3">0+</div>
+                    <div class="label">Years AI/ML</div>
+                </div>
+                <div class="divider"></div>
+                <div class="metric">
+                    <div class="number" data-count="10">0+</div>
+                    <div class="label">Projects Built</div>
+                </div>
+                <div class="divider"></div>
+                <div class="metric">
+                    <div class="number" data-count="5">0+</div>
+                    <div class="label">Technologies</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-shape">
+                <div class="hero-shape-inner"><img src="media/picturesofme/Headshot.jpg" alt="Nicolas Peters Saa"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+    <div class="section-head reveal">
+        <h2><span class="gradient-text">About Me</span></h2>
+        <p>Innovation-driven engineer passionate about AI and automation</p>
+    </div>
+    <div class="about-grid">
+        <div class="about-text reveal">
+            <h3>Who I Am</h3>
+            <p>Based in Hamburg, Germany — M.Sc. Innovation Management student at HSBA Hamburg School of Business Administration (2024–current), and B.Sc. Medical Management graduate from THM Gießen (2019–2023).</p>
+            <p>I combine regulatory and quality management expertise with hands-on AI development — building intelligent automation, data pipelines, and AI-powered solutions at the intersection of healthcare, life sciences, and technology.</p>
+        </div>
+        <div class="stat-grid reveal reveal-delay-1">
+            <div class="stat-card">
+                <div class="num">M.Sc.</div>
+                <div class="stat-label">HSBA Hamburg · 2024–now</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">B.Sc.</div>
+                <div class="stat-label">THM Gießen · 2019–2023</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">6+</div>
+                <div class="stat-label">Professional Roles</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">2</div>
+                <div class="stat-label">SaMD Clients (RA/QM)</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+    <div class="section-head reveal">
+        <h2><span class="gradient-text">Skills & Expertise</span></h2>
+    </div>
+    <div class="grid">
+        <div class="card reveal">
+            <span class="card-icon">&#129302;</span>
+            <h3>AI & Machine Learning</h3>
+            <p>Building intelligent systems with state-of-the-art AI models and frameworks.</p>
+            <span class="tag">Claude / GPT-4</span>
+            <span class="tag">LLMs</span>
+            <span class="tag">ComfyUI</span>
+        </div>
+        <div class="card reveal reveal-delay-1">
+            <span class="card-icon">&#9881;&#65039;</span>
+            <h3>Automation & Workflows</h3>
+            <p>Creating seamless automation pipelines and intelligent workflows.</p>
+            <span class="tag">n8n</span>
+            <span class="tag">Process Mining</span>
+            <span class="tag">API Integration</span>
+        </div>
+        <div class="card reveal reveal-delay-2">
+            <span class="card-icon">&#128190;</span>
+            <h3>Data Engineering</h3>
+            <p>Designing robust data pipelines and knowledge graph architectures.</p>
+            <span class="tag">Neo4j</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQL</span>
+        </div>
+    </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+    <div class="section-head reveal">
+        <h2><span class="gradient-text">Experience</span></h2>
+        <p>Professional roles across AI, healthcare tech, and management consulting</p>
+    </div>
+    <div class="grid">
+
+        <div class="card reveal">
+            <span class="card-icon">🤖</span>
+            <h3>Master Student — IBM TLS Sales</h3>
+            <div class="exp-company">IBM</div>
+            <div class="exp-meta">Hamburg, Germany &middot; Current</div>
+            <p class="exp-desc">Dual-study program combining master-level coursework with hands-on work in IBM Technology Lifecycle Services sales in Hamburg.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+            <span class="card-icon">📊</span>
+            <h3>Associate</h3>
+            <div class="exp-company">ZELOS Management Consultants</div>
+            <div class="exp-meta">Hamburg &middot; Oct 2024 – Mar 2025</div>
+            <p class="exp-desc">Simplified over 8M lines of client data using VBA. Instructed IT clients on Excel/VBA analytics. Created potential client analyses for ZELOS.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+            <span class="card-icon">🏥</span>
+            <h3>Junior RA / QM Associate</h3>
+            <div class="exp-company">Orthopy Health GmbH</div>
+            <div class="exp-meta">Hamburg &middot; May 2023 – Oct 2024</div>
+            <p class="exp-desc">Strategic regulatory guidance for global markets. Audits, CAPA implementation, QMS changes, and served as key regulatory contact.</p>
+        </div>
+
+        <div class="card reveal">
+            <span class="card-icon">🩺</span>
+            <h3>Patient Coach</h3>
+            <div class="exp-company">Alio Health Services</div>
+            <div class="exp-meta">Hamburg &middot; Apr 2022 – Dec 2022</div>
+            <p class="exp-desc">Coached patients during enrollment and PSVT episodes in clinical study trials.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+            <span class="card-icon">📦</span>
+            <h3>Student Worker — Logistics</h3>
+            <div class="exp-company">Philips GmbH Market DACH</div>
+            <div class="exp-meta">Hamburg &middot; Nov 2021 – Oct 2022</div>
+            <p class="exp-desc">Managed tasks for supplier chain support workers and coordinated with suppliers for timely delivery resolution.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+            <span class="card-icon">🔬</span>
+            <h3>Internship — Policy &amp; Research</h3>
+            <div class="exp-company">VCI Hessen (Chemical Industry Association)</div>
+            <div class="exp-meta">Frankfurt &middot; Aug 2021 – Sep 2021</div>
+            <p class="exp-desc">Assisted the Director in meeting preparation and contributed research findings to published articles.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============ FREELANCE / SELF-EMPLOYMENT ============ -->
+<section id="freelance" class="freelance-section">
+    <canvas id="node-canvas" class="node-bg"></canvas>
+    <div class="section-inner">
+        <div class="section-head reveal">
+            <h2><span class="gradient-text">Freelance & Consulting</span></h2>
+            <p>Independent work in Quality Management and Regulatory Affairs</p>
+        </div>
+        <div class="freelance-grid">
+
+            <div class="freelance-card reveal">
+                <div class="freelance-co">Dianovi</div>
+                <div class="freelance-role">QM &amp; Regulatory Affairs</div>
+                <a href="https://www.dianovi.com/" target="_blank" class="freelance-url">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    dianovi.com
+                </a>
+                <p class="freelance-desc">Quality management consulting and regulatory affairs support — process documentation, compliance frameworks, and quality system implementation for life sciences and healthcare clients.</p>
+                <span class="tag">Quality Management</span>
+                <span class="tag">Regulatory Affairs</span>
+                <span class="tag">ISO 13485</span>
+            </div>
+
+            <div class="freelance-card reveal reveal-delay-1">
+                <div class="freelance-co">PIPRA</div>
+                <div class="freelance-role">QM &amp; Regulatory Affairs</div>
+                <a href="https://pipra.ch/" target="_blank" class="freelance-url">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    pipra.ch
+                </a>
+                <p class="freelance-desc">Regulatory affairs consulting and quality management strategy for pharmaceutical and healthcare sectors — regulatory submissions, SOP development, and audit preparation.</p>
+                <span class="tag">Quality Management</span>
+                <span class="tag">Regulatory Affairs</span>
+                <span class="tag">Pharma</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ============ CERTIFICATIONS ============ -->
+<section id="certifications">
+    <div class="section-head reveal">
+        <h2><span class="gradient-text">Certifications</span></h2>
+        <p>Credentials earned across AI, cloud, quality management, and emerging tech</p>
+    </div>
+    <div class="cert-grid">
+
+        <!-- IBM AI Fundamentals -->
+        <div class="cert-card reveal" onclick="openLightbox('media/certificates/ai1/artificial-intelligence-fundamentals.png','media/certificates/ai1/IBMDesign20250822-32-6fci3g.pdf','IBM AI Fundamentals')">
+            <div class="cert-img-wrap">
+                <img src="media/certificates/ai1/artificial-intelligence-fundamentals.png" alt="IBM AI Fundamentals" loading="lazy">
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Artificial Intelligence Fundamentals</h4>
+                <span class="cert-issuer">IBM</span>
+                <div class="cert-links">
+                    <a href="media/certificates/ai1/IBMDesign20250822-32-6fci3g.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">
+                        &#128196; Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- IBM Enterprise Design Thinking -->
+        <div class="cert-card reveal reveal-delay-1" onclick="openLightbox('media/certificates/designthinking1/enterprise-design-thinking-practitioner.1.png','media/certificates/designthinking1/EnterpriseDesignThinkingPractitioner_Badge20250822-29-kjydyy.pdf','Enterprise Design Thinking Practitioner')">
+            <div class="cert-img-wrap">
+                <img src="media/certificates/designthinking1/enterprise-design-thinking-practitioner.1.png" alt="Enterprise Design Thinking Practitioner" loading="lazy">
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Enterprise Design Thinking Practitioner</h4>
+                <span class="cert-issuer">IBM</span>
+                <div class="cert-links">
+                    <a href="media/certificates/designthinking1/EnterpriseDesignThinkingPractitioner_Badge20250822-29-kjydyy.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">
+                        &#128196; Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cisco Black Belt AI -->
+        <div class="cert-card reveal reveal-delay-2" onclick="openLightbox('media/certificates/cisco%20zertifikate1/Black%20Belt%20AI%20Fundamentals%20Pre-Sales.png',null,'Cisco Black Belt AI Fundamentals Pre-Sales')">
+            <div class="cert-img-wrap">
+                <img src="media/certificates/cisco%20zertifikate1/Black%20Belt%20AI%20Fundamentals%20Pre-Sales.png" alt="Cisco Black Belt AI Fundamentals Pre-Sales" loading="lazy">
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Black Belt AI Fundamentals Pre-Sales</h4>
+                <span class="cert-issuer">Cisco</span>
+            </div>
+        </div>
+
+        <!-- Cisco Black Belt DC Compute -->
+        <div class="cert-card reveal" onclick="openLightbox('media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Compute%20Sales%202.png',null,'Cisco Black Belt Data Center Compute Sales')">
+            <div class="cert-img-wrap">
+                <img src="media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Compute%20Sales%202.png" alt="Cisco Black Belt Data Center Compute Sales" loading="lazy">
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Black Belt Data Center Compute Sales</h4>
+                <span class="cert-issuer">Cisco</span>
+            </div>
+        </div>
+
+        <!-- Cisco Black Belt DC Networking -->
+        <div class="cert-card reveal reveal-delay-1" onclick="openLightbox('media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Networking%20Sales.png',null,'Cisco Black Belt Data Center Networking Sales')">
+            <div class="cert-img-wrap">
+                <img src="media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Networking%20Sales.png" alt="Cisco Black Belt Data Center Networking Sales" loading="lazy">
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Black Belt Data Center Networking Sales</h4>
+                <span class="cert-issuer">Cisco</span>
+            </div>
+        </div>
+
+        <!-- Cisco Black Belt Devices - PDF only -->
+        <div class="cert-card reveal reveal-delay-2" onclick="window.open('media/certificates/cisco%20zertifikate1/Black%20Belt%20Devices%20Presales%20Stage%201.pdf','_blank')">
+            <div class="cert-art-wrap">
+                <div class="cert-art cert-art-cisco">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <div class="cert-art-abbr">Black Belt</div>
+                    <div class="cert-art-divider"></div>
+                    <div class="cert-art-sub">Devices Presales Stage 1</div>
+                </div>
+                <div class="cert-overlay"><span>View PDF</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Black Belt Devices Presales Stage 1</h4>
+                <span class="cert-issuer">Cisco</span>
+                <div class="cert-links">
+                    <a href="media/certificates/cisco%20zertifikate1/Black%20Belt%20Devices%20Presales%20Stage%201.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">&#128196; View PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MBA -->
+        <div class="cert-card reveal" onclick="window.open('media/certificates/mba1/MBA%202.pdf','_blank')">
+            <div class="cert-art-wrap">
+                <div class="cert-art cert-art-gold">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    <div class="cert-art-abbr">MBA</div>
+                    <div class="cert-art-divider"></div>
+                    <div class="cert-art-sub">Master of Business Administration</div>
+                </div>
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>MBA Certificate</h4>
+                <span class="cert-issuer">Business School / Udemy</span>
+                <div class="cert-links">
+                    <a href="media/certificates/mba1/MBA%202.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">&#128196; View PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quality Management Bundle -->
+        <div class="cert-card reveal reveal-delay-1" onclick="window.open('media/certificates/qmcertificates/Auditgarant_Zertifikat_Nicolas_Peters%20Saa%20alle.pdf','_blank')">
+            <div class="cert-art-wrap">
+                <div class="cert-art cert-art-teal">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    <div class="cert-art-abbr">QM</div>
+                    <div class="cert-art-divider"></div>
+                    <div class="cert-art-sub">Quality Management<br>QMB &amp; QMF Bundle</div>
+                </div>
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>Quality Management (QMB &amp; QMF)</h4>
+                <span class="cert-issuer">Auditgarant / DGQ</span>
+                <div class="cert-links">
+                    <a href="media/certificates/qmcertificates/QMB_Saa_Peters_Nicolas_ZE_EN.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">QMB</a>
+                    <a href="media/certificates/qmcertificates/QMF_Saa_Peters_Nicolas_ZE_EN.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">QMF</a>
+                    <a href="media/certificates/qmcertificates/Auditgarant_Zertifikat_Nicolas_Peters%20Saa%20alle.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">Full Bundle</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- IBM Quantum -->
+        <div class="cert-card reveal reveal-delay-2" onclick="window.open('media/certificates/quantum1/IBM%20Quantum-Safe%20Conversations.pdf','_blank')">
+            <div class="cert-art-wrap">
+                <div class="cert-art cert-art-blue">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/></svg>
+                    <div class="cert-art-abbr">Quantum</div>
+                    <div class="cert-art-divider"></div>
+                    <div class="cert-art-sub">IBM Quantum-Safe<br>Conversations</div>
+                </div>
+                <div class="cert-overlay"><span>View Full</span></div>
+            </div>
+            <div class="cert-info">
+                <h4>IBM Quantum-Safe Conversations</h4>
+                <span class="cert-issuer">IBM</span>
+                <div class="cert-links">
+                    <a href="media/certificates/quantum1/IBM%20Quantum-Safe%20Conversations.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">&#128196; View PDF</a>
+                    <a href="media/certificates/quantum1/Quantum%20Business%20impact.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">Quantum Business</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============ WORKING ON ============ -->
+<section id="working-on">
+    <div class="section-head reveal">
+        <h2><span class="gradient-text">Currently Working On</span></h2>
+        <p>Projects &amp; certifications in progress &mdash; always building</p>
+    </div>
+    <div class="wip-grid">
+
+        <div class="wip-card reveal">
+            <div class="wip-badge" style="background:rgba(0,232,135,0.08);border-color:rgba(0,232,135,0.25);color:#00e887"><span class="wip-dot" style="background:#00e887"></span> Complete</div>
+            <h4>n8n Automation Workflows</h4>
+            <p class="wip-issuer">Local AI agent networks, GPU integration &amp; Neo4j process mining</p>
+            <div class="wip-progress-wrap">
+                <div class="wip-progress-label"><span>Progress</span><span>100%</span></div>
+                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 100%; background: linear-gradient(90deg, #00e887, #00d4ff)"></div></div>
+            </div>
+        </div>
+
+        <div class="wip-card reveal reveal-delay-1">
+            <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
+            <h4>Trading Prediction Engine</h4>
+            <p class="wip-issuer">AI-powered prediction system using ensemble models</p>
+            <div class="wip-progress-wrap">
+                <div class="wip-progress-label"><span>Progress</span><span>20%</span></div>
+                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 20%"></div></div>
+            </div>
+        </div>
+
+        <div class="wip-card reveal reveal-delay-2">
+            <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
+            <h4>Master Thesis</h4>
+            <p class="wip-issuer">European Tenders Price Prediction &mdash; HSBA</p>
+            <div class="wip-progress-wrap">
+                <div class="wip-progress-label"><span>Progress</span><span>50%</span></div>
+                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 50%"></div></div>
+            </div>
+        </div>
+
+        <div class="wip-card reveal reveal-delay-1">
+            <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
+            <h4>IBM Quantum Ambassador Certificate</h4>
+            <p class="wip-issuer">IBM &mdash; Quantum Computing</p>
+            <div class="wip-progress-wrap">
+                <div class="wip-progress-label"><span>Progress</span><span>20%</span></div>
+                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 20%"></div></div>
+            </div>
+        </div>
+
+        <div class="wip-card reveal reveal-delay-2">
+            <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
+            <h4>Master — Innovation Management</h4>
+            <p class="wip-issuer">HSBA Hamburg School of Business Administration</p>
+            <div class="wip-progress-wrap">
+                <div class="wip-progress-label"><span>Progress</span><span>60%</span></div>
+                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 60%"></div></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact-section">
+    <div class="section-head reveal">
+        <h2><span class="gradient-text">Let's Connect</span></h2>
+        <p>Interested in collaborating or discussing innovative projects?</p>
+    </div>
+    <div class="contact-links reveal reveal-delay-1">
+        <a href="mailto:nicolaspeterssaa@gmail.com" class="btn btn-primary">Email Me</a>
+        <a href="https://www.linkedin.com/in/nicolas-peters-saa-635a501bb" target="_blank" class="btn btn-ghost">LinkedIn</a>
+        <a href="https://github.com/Nodolas" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="">
+        <p class="lightbox-title" id="lightbox-title"></p>
+        <div class="lightbox-actions">
+            <a id="lightbox-pdf" href="#" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:10px 20px;display:none;">&#128196; Download PDF</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 Nicolas Peters Saa &middot; Built with curiosity
+</footer>
+
+<script>
+// ==============================
+// PARTICLE NETWORK — pure Canvas 2D, no dependencies
+// Scrolls with the page via parallax, mouse-interactive
+// ==============================
+(function () {
+    const canvas = document.getElementById('scene');
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0;
+
+    function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // ---- Particles ----
+    const N = 130;
+    const LINK_DIST = 160;
+    const particles = [];
+
+    for (let i = 0; i < N; i++) {
+        particles.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: (Math.random() - 0.5) * 0.45,
+            r: Math.random() * 1.6 + 0.6,
+            phase: Math.random() * Math.PI * 2,   // for subtle pulse
+        });
+    }
+
+    // ---- Mouse ----
+    const mouse = { x: -9999, y: -9999 };
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+    // ---- Scroll parallax ----
+    let scrollY = 0, targetScrollY = 0;
+    window.addEventListener('scroll', () => { targetScrollY = window.scrollY; }, { passive: true });
+
+    // ---- Draw loop ----
+    let t = 0;
+    let dirPhase = 0; // slowly oscillates direction forward → reverse → forward
+    function draw() {
+        requestAnimationFrame(draw);
+        t += 0.012;
+
+        // Smooth pendulum: sin ranges -1 to +1, creating a natural ease-out → stop → ease-in reverse
+        dirPhase += 0.0018;
+        const speedMult = Math.sin(dirPhase);
+
+        // Smooth scroll
+        scrollY += (targetScrollY - scrollY) * 0.07;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Parallax offset — particles drift at 18% of scroll speed
+        const py = -scrollY * 0.18;
+
+        // Update positions — multiply by speedMult so direction reverses smoothly
+        particles.forEach(p => {
+            p.x += p.vx * speedMult;
+            p.y += p.vy * speedMult;
+            // Wrap inside viewport (works in both directions)
+            if (p.x < -20) p.x = W + 20;
+            else if (p.x > W + 20) p.x = -20;
+            if (p.y < -20) p.y = H + 20;
+            else if (p.y > H + 20) p.y = -20;
+        });
+
+        // Draw connections
+        for (let i = 0; i < N; i++) {
+            const a = particles[i];
+            for (let j = i + 1; j < N; j++) {
+                const b = particles[j];
+                const dx = a.x - b.x;
+                const dy = a.y - b.y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < LINK_DIST) {
+                    const alpha = (1 - d / LINK_DIST) * 0.22;
+                    ctx.save();
+                    ctx.translate(0, py);
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.strokeStyle = `rgba(0,212,255,${alpha})`;
+                    ctx.lineWidth = 0.9;
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+        }
+
+        // Draw particles
+        particles.forEach(p => {
+            const glow = 0.25 + 0.08 * Math.sin(t + p.phase);
+            const drawX = p.x;
+            const drawY = p.y + py;
+
+            // Mouse repulsion highlight
+            const mdx = drawX - mouse.x;
+            const mdy = drawY - mouse.y;
+            const md = Math.sqrt(mdx * mdx + mdy * mdy);
+            const boost = md < 120 ? (1 - md / 120) * 0.55 : 0;
+
+            // Outer glow
+            const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, p.r * 7 + boost * 12);
+            grad.addColorStop(0, `rgba(0,212,255,${glow + boost * 0.3})`);
+            grad.addColorStop(1, 'rgba(0,212,255,0)');
+            ctx.beginPath();
+            ctx.arc(drawX, drawY, p.r * 7 + boost * 12, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Core dot
+            ctx.beginPath();
+            ctx.arc(drawX, drawY, p.r + boost * 1.5, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0,225,255,${0.75 + boost * 0.25})`;
+            ctx.fill();
+        });
+    }
+    draw();
+})();
+
+
+// ==============================
+// CARD SPOTLIGHT (mouse-follow glow)
+// ==============================
+document.querySelectorAll('.card').forEach(c => {
+    c.addEventListener('mousemove', e => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+        c.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+    });
+});
+
+// ==============================
+// SCROLL REVEAL
+// ==============================
+(function() {
+    const revObs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    const els = document.querySelectorAll('.reveal');
+    els.forEach(el => revObs.observe(el));
+
+    // Immediate reveal for elements already in viewport
+    function revealVisible() {
+        els.forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight + 40 && r.bottom > -40) el.classList.add('visible');
+        });
+    }
+    revealVisible();
+    window.addEventListener('load', revealVisible);
+    // Hard fallback: reveal everything after 800ms in case observer stalls
+    setTimeout(() => els.forEach(el => el.classList.add('visible')), 800);
+})();
+
+// ==============================
+// ACTIVE NAV LINK
+// ==============================
+(function() {
+    const links = document.querySelectorAll('nav a');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                links.forEach(l => l.classList.remove('active'));
+                const a = document.querySelector('nav a[href="#' + e.target.id + '"]');
+                if (a) a.classList.add('active');
+            }
+        });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
+})();
+
+// ==============================
+// TEXT SCRAMBLE / DECODE EFFECT
+// ==============================
+(function() {
+    const el = document.getElementById('scramble-target');
+    if (!el) return;
+    const phrases = ['Future with AI', 'Smart Solutions', 'Intelligent Systems', 'Tomorrow, Today'];
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&';
+    let idx = 0;
+    function scramble(text) {
+        let frame = 0;
+        (function step() {
+            let out = '';
+            for (let i = 0; i < text.length; i++) {
+                out += i < frame ? text[i] : chars[Math.random() * chars.length | 0];
+            }
+            el.textContent = out;
+            if (++frame <= text.length + 3) setTimeout(step, 45);
+        })();
+    }
+    setInterval(() => { idx = (idx + 1) % phrases.length; scramble(phrases[idx]); }, 9000);
+})();
+
+// ==============================
+// LIGHTBOX
+// ==============================
+function openLightbox(imgSrc, pdfSrc, title) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const ttl = document.getElementById('lightbox-title');
+    const pdf = document.getElementById('lightbox-pdf');
+    img.src = imgSrc;
+    ttl.textContent = title;
+    if (pdfSrc) {
+        pdf.href = pdfSrc;
+        pdf.style.display = 'inline-flex';
+    } else {
+        pdf.style.display = 'none';
+    }
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({}); });
+
+// ==============================
+// WIP PROGRESS BAR ANIMATION
+// ==============================
+(function() {
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.querySelectorAll('.wip-bar-animated').forEach(bar => {
+                    setTimeout(() => bar.classList.add('animate'), 100);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.wip-card').forEach(c => obs.observe(c));
+})();
+
+// ==============================
+// HERO COUNTER ANIMATION
+// ==============================
+(function() {
+    const nums = document.querySelectorAll('.social-proof .number');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const target = parseInt(e.target.dataset.count);
+                let cur = 0;
+                (function step() {
+                    e.target.textContent = ++cur + '+';
+                    if (cur < target) requestAnimationFrame(step);
+                })();
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    nums.forEach(n => obs.observe(n));
+})();
+
+// ==============================
+// FREELANCE SECTION — LOW-POLY NODE MESH
+// Triangulated grey mesh (PIPRA-style), abstract geometric pattern, no brain shape
+// ==============================
+(function () {
+    const canvas = document.getElementById('node-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const section = document.getElementById('freelance');
+
+    const N = 85;
+    const LINK = 115;
+    let W = 0, H = 0;
+    let nodes = [];
+
+    function resize() {
+        W = canvas.width = section.offsetWidth || window.innerWidth;
+        H = canvas.height = section.offsetHeight || 600;
+        nodes = Array.from({ length: N }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.22,
+            vy: (Math.random() - 0.5) * 0.22,
+        }));
+    }
+
+    // Wait for layout to settle before measuring section height
+    setTimeout(resize, 120);
+    window.addEventListener('resize', resize);
+    if (window.ResizeObserver) {
+        new ResizeObserver(() => {
+            if (section.offsetHeight !== H || section.offsetWidth !== W) resize();
+        }).observe(section);
+    }
+
+    function draw() {
+        requestAnimationFrame(draw);
+        if (!W || !H) return;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Move nodes — bounce off walls
+        nodes.forEach(n => {
+            n.x += n.vx; n.y += n.vy;
+            if (n.x <= 0 || n.x >= W) { n.vx *= -1; n.x = Math.max(0, Math.min(W, n.x)); }
+            if (n.y <= 0 || n.y >= H) { n.vy *= -1; n.y = Math.max(0, Math.min(H, n.y)); }
+        });
+
+        // Pre-compute distances (upper triangle only)
+        const D = [];
+        for (let i = 0; i < N; i++) {
+            D[i] = new Float32Array(N);
+            for (let j = i + 1; j < N; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                D[i][j] = Math.sqrt(dx * dx + dy * dy);
+            }
+        }
+
+        // Draw filled triangles — this gives the PIPRA low-poly look
+        for (let i = 0; i < N - 2; i++) {
+            for (let j = i + 1; j < N - 1; j++) {
+                const dij = D[i][j];
+                if (dij > LINK) continue;
+                for (let k = j + 1; k < N; k++) {
+                    const dik = D[i][k];
+                    if (dik > LINK) continue;
+                    const djk = D[j][k];
+                    if (djk > LINK) continue;
+                    const maxD = Math.max(dij, dik, djk);
+                    const alpha = (1 - maxD / LINK) * 0.045;
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.lineTo(nodes[k].x, nodes[k].y);
+                    ctx.closePath();
+                    ctx.fillStyle = `rgba(120,132,145,${alpha})`;
+                    ctx.fill();
+                }
+            }
+        }
+
+        // Draw connecting lines
+        for (let i = 0; i < N; i++) {
+            for (let j = i + 1; j < N; j++) {
+                const d = D[i][j];
+                if (d < LINK) {
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[i].x, nodes[i].y);
+                    ctx.lineTo(nodes[j].x, nodes[j].y);
+                    ctx.strokeStyle = `rgba(130,142,158,${(1 - d / LINK) * 0.2})`;
+                    ctx.lineWidth = 0.6;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Draw nodes
+        nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 1.8, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(145,158,175,0.7)';
+            ctx.fill();
+        });
+    }
+    draw();
+})();
+</script>
+</body>
+</html>
