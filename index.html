@@ -3,7 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Innovation & AI Engineer</title>
+    <title>Nicolas Peters Saa | Innovation Management & AI Engineer</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Portfolio of Nicolas Peters Saa — M.Sc. Innovation Management student at HSBA Hamburg, AI engineer, and freelance QM & Regulatory Affairs consultant. Building AI-powered products and intelligent automation.">
+    <meta name="keywords" content="Nicolas Peters Saa, AI Engineer, Innovation Management, Regulatory Affairs, Quality Management, Hamburg, IBM, HSBA, Machine Learning, Automation">
+    <meta name="author" content="Nicolas Peters Saa">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (LinkedIn, Facebook, WhatsApp) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nicolas Peters Saa | Innovation & AI Engineer">
+    <meta property="og:description" content="M.Sc. Innovation Management student at HSBA Hamburg. Building AI-powered products, intelligent automation, and freelance QM/RA consulting.">
+    <meta property="og:image" content="media/picturesofme/Headshot.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="media/favicon.svg">
+    <link rel="apple-touch-icon" href="media/favicon.svg">
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nicolas Peters Saa | Innovation & AI Engineer">
+    <meta name="twitter:description" content="M.Sc. Innovation Management student at HSBA Hamburg. Building AI-powered products and intelligent automation.">
+    <meta name="twitter:image" content="media/picturesofme/Headshot.jpg">
     <style>
         :root {
             --bg: #030508;
@@ -119,9 +144,10 @@
             align-items: start;
         }
         #scramble-target {
-            display: inline-block;
-            min-width: 12ch;
+            display: block;
             overflow: hidden;
+            white-space: nowrap;
+            max-width: 100%;
         }
         .hero-content { min-width: 0; max-width: 620px; }
 
@@ -823,21 +849,79 @@
             margin-bottom: 20px;
         }
 
+        /* ---- Hamburger button ---- */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px 14px;
+            background: none;
+            border: none;
+        }
+        .nav-hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-dim);
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--accent); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--accent); }
+
         /* ---- Responsive ---- */
+
+        /* Medium: shrink photo column so text has room */
+        @media (max-width: 1100px) {
+            .hero-inner { grid-template-columns: minmax(0, 1fr) 340px; gap: 40px; }
+            .hero-visual { width: 340px; }
+            .hero-shape { width: 320px; height: 320px; }
+        }
+
+        /* Tablet / narrow: single column stack */
         @media (max-width: 900px) {
-            .hero-inner { flex-direction: column; text-align: center; }
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
             .hero-content { max-width: 100%; }
             .hero .subtitle { margin-left: auto; margin-right: auto; }
             .hero-cta { justify-content: center; }
             .social-proof { justify-content: center; }
             .hero-visual { display: none; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            nav { padding: 8px 6px; }
-            nav a { font-size: 12px; padding: 6px 12px; }
+            #scramble-target { text-align: center; }
         }
+
+        /* Mobile: hamburger nav */
+        @media (max-width: 680px) {
+            nav { padding: 4px 4px; border-radius: 40px; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: calc(100% + 12px);
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(3, 5, 8, 0.97);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgba(0, 212, 255, 0.12);
+                border-radius: 20px;
+                padding: 10px;
+                gap: 2px;
+                min-width: 220px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            }
+            nav ul.open { display: flex; }
+            nav a { font-size: 14px; padding: 10px 20px; border-radius: 12px; }
+            .nav-hamburger { display: flex; }
+        }
+
         @media (max-width: 600px) {
             section { padding: 80px 16px; }
             .grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: clamp(36px, 9vw, 52px); }
         }
     </style>
 </head>
@@ -846,6 +930,9 @@
 <canvas id="scene"></canvas>
 
 <nav id="nav">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+    </button>
     <ul>
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -867,8 +954,8 @@
                 Innovation Management & AI Engineering
             </div>
             <h1>
-                <span class="line">Building the</span>
-                <span class="line"><span class="gradient-text" id="scramble-target">Future with AI</span></span>
+                <span class="line">Building</span>
+                <span class="line"><span class="gradient-text" id="scramble-target">With AI</span></span>
             </h1>
             <p class="subtitle">Master's student crafting AI-powered products and intelligent automation. Turning research into real-world solutions.</p>
             <div class="hero-cta">
@@ -909,13 +996,13 @@
     <div class="about-grid">
         <div class="about-text reveal">
             <h3>Who I Am</h3>
-            <p>Based in Hamburg, Germany — M.Sc. Innovation Management student at HSBA Hamburg School of Business Administration (2024–current), and B.Sc. Medical Management graduate from THM Gießen (2019–2023).</p>
-            <p>I combine regulatory and quality management expertise with hands-on AI development — building intelligent automation, data pipelines, and AI-powered solutions at the intersection of healthcare, life sciences, and technology.</p>
+            <p>Based in Hamburg, Germany M.Sc. Innovation Management student at HSBA Hamburg School of Business Administration, and B.Sc. Medical Management graduate from THM Gießen (2019–2023).</p>
+            <p>I combine regulatory and quality management expertise with hands-on AI development & value engineering skills building intelligent automation, data pipelines, and AI-powered solutions at the intersection of healthcare & technology.</p>
         </div>
         <div class="stat-grid reveal reveal-delay-1">
             <div class="stat-card">
                 <div class="num">M.Sc.</div>
-                <div class="stat-label">HSBA Hamburg · 2024–now</div>
+                <div class="stat-label">HSBA · 2024–now</div>
             </div>
             <div class="stat-card">
                 <div class="num">B.Sc.</div>
@@ -970,7 +1057,7 @@
 <section id="experience">
     <div class="section-head reveal">
         <h2><span class="gradient-text">Experience</span></h2>
-        <p>Professional roles across AI, healthcare tech, and management consulting</p>
+        <p>Professional roles across healthcare tech, tech, and management consulting</p>
     </div>
     <div class="grid">
 
@@ -1058,7 +1145,7 @@
                 <p class="freelance-desc">Regulatory affairs consulting and quality management strategy for pharmaceutical and healthcare sectors — regulatory submissions, SOP development, and audit preparation.</p>
                 <span class="tag">Quality Management</span>
                 <span class="tag">Regulatory Affairs</span>
-                <span class="tag">Pharma</span>
+                <span class="tag">ISO 13485</span>
             </div>
 
         </div>
@@ -1503,7 +1590,7 @@ document.querySelectorAll('.card').forEach(c => {
 (function() {
     const el = document.getElementById('scramble-target');
     if (!el) return;
-    const phrases = ['Future with AI', 'Smart Solutions', 'Intelligent Systems', 'Tomorrow, Today'];
+    const phrases = ['New AI', 'Smart Solutions', 'Smart Systems', 'Our Tomorrow, Today', 'Quantumsolutions'];
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&';
     let idx = 0;
     function scramble(text) {
@@ -1581,6 +1668,34 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
         });
     }, { threshold: 0.1 });
     nums.forEach(n => obs.observe(n));
+})();
+
+// ==============================
+// HAMBURGER MENU
+// ==============================
+(function() {
+    const btn = document.getElementById('nav-hamburger');
+    const ul = document.querySelector('nav ul');
+    if (!btn) return;
+    btn.addEventListener('click', e => {
+        e.stopPropagation();
+        btn.classList.toggle('open');
+        ul.classList.toggle('open');
+    });
+    // Close on link click
+    document.querySelectorAll('nav a').forEach(a => {
+        a.addEventListener('click', () => {
+            btn.classList.remove('open');
+            ul.classList.remove('open');
+        });
+    });
+    // Close on outside click
+    document.addEventListener('click', e => {
+        if (!e.target.closest('nav')) {
+            btn.classList.remove('open');
+            ul.classList.remove('open');
+        }
+    });
 })();
 
 // ==============================
