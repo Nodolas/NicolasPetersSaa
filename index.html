@@ -596,28 +596,6 @@
         }
         .wip-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
         .wip-card .wip-issuer { font-size: 13px; color: var(--text-dim); margin-bottom: 16px; }
-        .wip-progress-wrap { margin-top: 8px; }
-        .wip-progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-dim);
-            margin-bottom: 6px;
-        }
-        .wip-bar-bg {
-            height: 4px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .wip-bar {
-            height: 100%;
-            border-radius: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            transition: width 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .wip-bar-animated { width: 0 !important; }
-        .wip-bar-animated.animate { width: var(--target-w) !important; }
 
         /* ---- Lightbox ---- */
         .lightbox {
@@ -844,7 +822,8 @@
             .hero .subtitle { margin-left: auto; margin-right: auto; }
             .hero-cta { justify-content: center; }
             .social-proof { justify-content: center; }
-            .hero-visual { display: none; }
+            .hero-visual { display: flex; justify-content: center; width: 100%; }
+            .hero-shape { width: 220px; height: 220px; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             #scramble-target { text-align: center; }
         }
@@ -1284,50 +1263,30 @@
             <div class="wip-badge" style="background:rgba(0,232,135,0.08);border-color:rgba(0,232,135,0.25);color:#00e887"><span class="wip-dot" style="background:#00e887"></span> Complete</div>
             <h4>n8n Automation Workflows</h4>
             <p class="wip-issuer">Local AI agent networks, GPU integration &amp; Neo4j process mining</p>
-            <div class="wip-progress-wrap">
-                <div class="wip-progress-label"><span>Progress</span><span>100%</span></div>
-                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 100%; background: linear-gradient(90deg, #00e887, #00d4ff)"></div></div>
-            </div>
         </div>
 
         <div class="wip-card reveal reveal-delay-1">
             <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
             <h4>Trading Prediction Engine</h4>
             <p class="wip-issuer">AI-powered prediction system using ensemble models</p>
-            <div class="wip-progress-wrap">
-                <div class="wip-progress-label"><span>Progress</span><span>20%</span></div>
-                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 20%"></div></div>
-            </div>
         </div>
 
         <div class="wip-card reveal reveal-delay-2">
             <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
             <h4>Master Thesis</h4>
             <p class="wip-issuer">European Tenders Price Prediction &mdash; HSBA</p>
-            <div class="wip-progress-wrap">
-                <div class="wip-progress-label"><span>Progress</span><span>50%</span></div>
-                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 50%"></div></div>
-            </div>
         </div>
 
         <div class="wip-card reveal reveal-delay-1">
             <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
             <h4>IBM Quantum Ambassador Certificate</h4>
             <p class="wip-issuer">IBM &mdash; Quantum Computing</p>
-            <div class="wip-progress-wrap">
-                <div class="wip-progress-label"><span>Progress</span><span>20%</span></div>
-                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 20%"></div></div>
-            </div>
         </div>
 
         <div class="wip-card reveal reveal-delay-2">
             <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
             <h4>Master — Innovation Management</h4>
             <p class="wip-issuer">HSBA Hamburg School of Business</p>
-            <div class="wip-progress-wrap">
-                <div class="wip-progress-label"><span>Progress</span><span>60%</span></div>
-                <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 60%"></div></div>
-            </div>
         </div>
 
     </div>
@@ -1380,8 +1339,9 @@
     window.addEventListener('resize', resize);
 
     // ---- Particles ----
-    const N = 170;
-    const LINK_DIST = 220;
+    const isMobile = window.innerWidth <= 768;
+    const N = isMobile ? 60 : 170;
+    const LINK_DIST = isMobile ? 140 : 220;
     const particles = [];
 
     for (let i = 0; i < N; i++) {
@@ -1588,22 +1548,6 @@ function closeLightbox(e) {
     document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({}); });
-
-// ==============================
-// WIP PROGRESS BAR ANIMATION
-// ==============================
-(function() {
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.querySelectorAll('.wip-bar-animated').forEach(bar => {
-                    setTimeout(() => bar.classList.add('animate'), 100);
-                });
-            }
-        });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.wip-card').forEach(c => obs.observe(c));
-})();
 
 // ==============================
 // HERO COUNTER ANIMATION
