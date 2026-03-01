@@ -50,35 +50,6 @@
             line-height: 1.6;
         }
 
-        /* ---- Custom Cursor ---- */
-        .cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-            transition: width 0.25s, height 0.25s, border-color 0.25s, background 0.25s;
-        }
-        .cursor.hover {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 212, 255, 0.1);
-            border-color: var(--accent2);
-        }
-        .cursor-dot {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10001;
-            transform: translate(-50%, -50%);
-        }
-
         /* ---- WebGL Canvas ---- */
         #scene {
             position: fixed;
@@ -471,7 +442,6 @@
         }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
 
         /* ---- Certifications ---- */
         .cert-grid {
@@ -530,15 +500,6 @@
             padding: 8px 20px;
             border-radius: 40px;
         }
-        .cert-no-img {
-            width: 100%;
-            aspect-ratio: 4/3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(0,232,135,0.06));
-        }
-        .cert-no-img svg { opacity: 0.4; }
         .cert-info {
             padding: 20px;
             display: flex;
@@ -555,10 +516,6 @@
             font-size: 12px;
             color: var(--accent);
             font-weight: 500;
-        }
-        .cert-year {
-            font-size: 12px;
-            color: var(--text-dim);
         }
         .cert-links {
             display: flex;
@@ -719,8 +676,7 @@
         }
         .lightbox-close:hover { background: rgba(255,255,255,0.12); }
 
-        /* ---- Cursor: disabled ---- */
-        .cursor, .cursor-dot { display: none !important; }
+
 
         /* ---- Certificate Art Previews ---- */
         .cert-art-wrap {
@@ -1367,7 +1323,7 @@
         <div class="wip-card reveal reveal-delay-2">
             <div class="wip-badge"><span class="wip-dot"></span> In Progress</div>
             <h4>Master — Innovation Management</h4>
-            <p class="wip-issuer">HSBA Hamburg School of Business Administration</p>
+            <p class="wip-issuer">HSBA Hamburg School of Business</p>
             <div class="wip-progress-wrap">
                 <div class="wip-progress-label"><span>Progress</span><span>60%</span></div>
                 <div class="wip-bar-bg"><div class="wip-bar wip-bar-animated" style="--target-w: 60%"></div></div>
@@ -1424,8 +1380,8 @@
     window.addEventListener('resize', resize);
 
     // ---- Particles ----
-    const N = 130;
-    const LINK_DIST = 160;
+    const N = 170;
+    const LINK_DIST = 220;
     const particles = [];
 
     for (let i = 0; i < N; i++) {
@@ -1590,7 +1546,7 @@ document.querySelectorAll('.card').forEach(c => {
 (function() {
     const el = document.getElementById('scramble-target');
     if (!el) return;
-    const phrases = ['New AI', 'Smart Solutions', 'Smart Systems', 'Our Tomorrow, Today', 'Quantumsolutions'];
+    const phrases = ['New AI', 'Smart Solutions', 'Smart Systems', 'Tomorrow, Today', 'Quantumsolutions'];
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&';
     let idx = 0;
     function scramble(text) {
