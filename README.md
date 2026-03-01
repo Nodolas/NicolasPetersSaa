@@ -1,50 +1,129 @@
-# Personal Website
+# Personal Portfolio — Nicolas Peters Saa
 
-This repository contains a single-page portfolio meant to showcase who you are and your career history. It is built with plain HTML, CSS, and JavaScript, and includes a dynamic WebGL background animation using [three.js](https://threejs.org).
+A single-file personal portfolio with an animated constellation background, scroll reveal effects, a certificate lightbox, and a mobile hamburger nav. No frameworks, no build tools, no dependencies beyond a local dev server.
 
-## Getting Started (Development)
+---
 
-1. **Open in VS Code** – simply open the workspace folder in VS Code.
-2. **Live Preview**
-   - Install the **Live Server** extension for VS Code and click "Go Live" in the status bar. This will serve `index.html` (or rename `main.html` to `index.html`) and reload automatically when you save changes.
-   - Alternatively, from a terminal you can run a simple HTTP server e.g.:
-     ```powershell
-     # using Python (if installed)
-     cd "c:\Programming\Personal Website"
-     py -m http.server 8000
-     # or with Node (install live-server globally or via npx)
-     npx live-server --port=8000
-     ```
-3. **Debugging** – open the browser's developer tools (F12) to inspect elements, view console messages, and profile animations. Resize the window to test responsiveness.
-4. **Customize** – update text placeholders, your photo, email address, and links to reflect your personal information. See comments inside `main.html` for guidance.
+## What's inside
 
-## Animations
+| File | Purpose |
+|---|---|
+| `index.html` | Everything — all HTML, CSS, and JS in one file |
+| `media/favicon.svg` | SVG favicon (N-letterform + cyan node dots) |
+| `media/picturesofme/` | Profile photo |
+| `media/certificates/` | Certificate images and PDFs |
+| `package.json` | Dev server scripts only |
 
-The page includes:
+---
 
-- A custom cursor and subtle interactive blob effect.
-- Gooey morphing gradients behind the content (CSS).
-- A full-screen three.js particle system that rotates and responds to mouse movement. You can extend this animation with shaders, morphing shapes, or a particle system like those seen in the example tweets (see `three.js` documentation or CodePen for inspiration).
+## Copy this for your own portfolio
 
-  The animations referenced in the tweets are generated with Processing/p5.js and Three.js with GLSL shaders; you can embed such sketches entirely inside the `<canvas>` instead of the basic particle cloud. For example:
-  ```js
-  // load p5.js and copy the sketch code from the tweet/CodePen
-  ```
-  or write a custom `ShaderMaterial` and animate vertices via noise for morphing backgrounds.
-  Use the comments in `main.html` as a starting point and experiment while watching the live preview.
+### 1. Get the files
 
-If you want more advanced visuals, consider creating a `shaderMaterial` with GLSL or integrating a library such as [Anime.js](https://animejs.com/) for timelines. The current setup is a starting point that you can evolve.
+Download or clone the repo, then delete `node_modules/` — you don't need it until you run the dev server.
 
-## Deployment to GitHub Pages
+### 2. Replace personal content in `index.html`
 
-1. Rename `main.html` to `index.html` (GitHub Pages looks for `index.html` in the root). The README already references this recommendation.
-2. Commit and push your changes to a GitHub repository named `yourusername.github.io` or enable Pages on any repository and set the source to the `main` branch.
-3. After a few minutes your site will be live at `https://yourusername.github.io/`.
+Open `index.html` and swap out the following (search by keyword):
 
-## Notes
+| What to change | Search for |
+|---|---|
+| Your name (title bar + hero) | `Nicolas Peters Saa` |
+| Your tagline / roles | `Innovation Management` |
+| Your email | `mailto:` |
+| LinkedIn URL | `linkedin.com/in/` |
+| GitHub URL | `github.com/` |
+| About section text | `<!-- About -->` |
+| Experience entries | `<!-- Experience -->` |
+| Education entries | `<!-- Education -->` |
+| Skills tags | `<!-- Skills -->` |
+| Freelance service cards | `<!-- Freelance -->` |
 
-- The project currently uses CDN links for three.js. You can also download the library and serve it locally if desired.
-- For mobile debugging, connect your device to the same network and navigate to `http://<machine-ip>:8000`.
-- Keep the `cursor-blob` styles if you want to maintain the custom cursor; remove `cursor: none;` if you prefer the system pointer.
+### 3. Replace the profile photo
 
-Feel free to enhance the animation code or convert this into a more complex build system (React/Vite/etc.) later. The current structure is intentionally minimal so you can debug in the browser while editing.
+Drop your photo into `media/picturesofme/` and update the `src` in the hero `<img>` tag:
+
+```html
+<img src="media/picturesofme/YourPhoto.jpg" alt="Your Name" ...>
+```
+
+### 4. Replace certificates
+
+Put your certificate images (PNG/JPG) and PDFs into subfolders under `media/certificates/`. Then update the certificate cards in the `#certifications` section. Each card follows this pattern:
+
+```html
+<div class="cert-card reveal">
+    <img src="media/certificates/yourfolder/cert.png" alt="Cert Name" class="cert-img">
+    <div class="cert-info">
+        <div class="cert-title">Certificate Name</div>
+        <div class="cert-issuer">Issuing Organisation</div>
+        <div class="cert-links">
+            <a href="media/certificates/yourfolder/cert.pdf" class="cert-link" target="_blank">View PDF</a>
+        </div>
+    </div>
+</div>
+```
+
+### 5. Update the SEO meta tags
+
+Near the top of `<head>`, update these lines with your own details:
+
+```html
+<meta name="description" content="Your description here">
+<meta name="keywords" content="Your, Keywords, Here">
+<meta name="author" content="Your Name">
+<meta property="og:title" content="Your Name | Your Title">
+<meta property="og:description" content="...">
+<meta property="og:image" content="media/picturesofme/YourPhoto.jpg">
+```
+
+> **Note:** `og:image` must be an **absolute URL** (e.g. `https://yourdomain.com/media/...`) for LinkedIn and WhatsApp previews to work. Update it after deployment.
+
+### 6. Replace the favicon
+
+Edit `media/favicon.svg` — it's a plain SVG you can open in any text editor or vector tool. Swap the strokes/dots for your own initials or icon. Keep the `viewBox="0 0 32 32"` so it stays crisp.
+
+---
+
+## Run locally
+
+**First time only:**
+```bash
+npm install
+```
+
+**Then start the dev server:**
+```bash
+npm start
+```
+
+The site opens at `http://127.0.0.1:8080` with live-reload on save.
+
+Alternatively, just open `index.html` directly in your browser — it works without any server (no fetch calls, no module imports).
+
+---
+
+## Deploy to GitHub Pages
+
+1. Create a GitHub repo named `yourusername.github.io`
+2. Push `index.html`, `media/`, and `package.json` (skip `node_modules/`)
+3. Go to **Settings → Pages** and set source to the `main` branch, root folder
+4. Your site will be live at `https://yourusername.github.io` within a few minutes
+5. Update `og:image` and `twitter:image` to the full `https://` URL after deployment
+
+---
+
+## Customise the background
+
+The animated constellation is pure Canvas 2D (no libraries). Find it near the bottom of `index.html` under the comment `PARTICLE NETWORK`. The key values to tweak:
+
+```js
+const N = 170;          // number of nodes — increase for a denser cloud
+const LINK_DIST = 220;  // px — nodes within this distance get connected
+```
+
+---
+
+## Licence
+
+Do whatever you want with it. Credit appreciated but not required.
