@@ -23,7 +23,7 @@
     <meta name="twitter:image" content="media/picturesofme/headshot-web.jpg">
 
     <link rel="icon" type="image/svg+xml" href="media/favicon.svg">
-    <link rel="apple-touch-icon" href="media/favicon.svg">
+    <link rel="apple-touch-icon" href="media/apple-touch-icon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +32,7 @@
 
     <style>
         /* =========================================================
-           TOKENS — white, black, one lime accent
+           TOKENS — white, black, one light-blue accent
            ========================================================= */
         :root {
             --bg: #ffffff;
@@ -41,8 +41,8 @@
             --ink-2: #55555c;
             --ink-3: #9a9aa3;
             --line: #e4e4e8;
-            --lime: #c8ff2e;
-            --lime-deep: #8fc400;
+            --accent: #9ad8ff;
+            --accent-deep: #1a8fe3;
             --display: 'Anton', Impact, 'Arial Narrow Bold', sans-serif;
             --font: 'Mona Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --gutter: clamp(20px, 5vw, 80px);
@@ -57,13 +57,13 @@
         .lenis.lenis-stopped { overflow: hidden; }
 
         body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        ::selection { background: var(--lime); color: var(--ink); }
+        ::selection { background: var(--accent); color: var(--ink); }
         a { color: inherit; text-decoration: none; }
         img, video { display: block; max-width: 100%; }
 
         .label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
         .idx { font-size: 11px; font-weight: 600; letter-spacing: .12em; color: var(--ink-3); }
-        .hl { background: linear-gradient(transparent 62%, var(--lime) 62%, var(--lime) 92%, transparent 92%); padding: 0 .06em; }
+        .hl { background: linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 92%, transparent 92%); padding: 0 .06em; }
 
         /* =========================================================
            PRELOADER
@@ -71,7 +71,7 @@
         #loader { position: fixed; inset: 0; z-index: 500; background: var(--ink); color: #fff; display: flex; flex-direction: column; justify-content: space-between; padding: 26px var(--gutter); will-change: transform; }
         #loader .top { display: flex; justify-content: space-between; }
         #loader .label { color: rgba(255,255,255,.6); }
-        #loader .count { font-family: var(--display); font-size: clamp(90px, 22vw, 320px); line-height: .85; text-transform: uppercase; align-self: flex-end; color: var(--lime); }
+        #loader .count { font-family: var(--display); font-size: clamp(90px, 22vw, 320px); line-height: .85; text-transform: uppercase; align-self: flex-end; color: var(--accent); }
         #loader .name { font-family: var(--display); font-size: clamp(28px, 6vw, 88px); line-height: .9; text-transform: uppercase; }
         #loader .name span { display: block; overflow: hidden; }
         #loader .name span i { display: block; font-style: normal; transform: translateY(110%); }
@@ -83,14 +83,14 @@
         #nav { position: fixed; inset: 0 0 auto 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px var(--gutter); transition: background .4s, box-shadow .4s; }
         #nav.scrolled { background: rgba(255,255,255,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line); }
         .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
-        .nav-logo .q { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 2px var(--ink); }
+        .nav-logo .q { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--ink); }
         #nav ul { display: flex; gap: 26px; list-style: none; }
         #nav ul a { font-size: 13px; font-weight: 500; color: var(--ink-2); position: relative; transition: color .25s; }
-        #nav ul a::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 100%; background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
+        #nav ul a::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
         #nav ul a:hover, #nav ul a.active { color: var(--ink); }
         #nav ul a.active::after { transform: scaleX(1); }
         .nav-cta { font-size: 13px; font-weight: 600; padding: 10px 16px; background: var(--ink); color: #fff; border-radius: 999px; transition: background .25s, color .25s; }
-        .nav-cta:hover { background: var(--lime); color: var(--ink); }
+        .nav-cta:hover { background: var(--accent); color: var(--ink); }
         .nav-hamburger { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; flex-direction: column; justify-content: center; gap: 5px; align-items: center; }
         .nav-hamburger span { width: 22px; height: 2px; background: var(--ink); transition: transform .3s, opacity .3s; }
         .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -112,20 +112,20 @@
             -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%); mask-image: linear-gradient(180deg, #000 78%, transparent 100%); }
         .hero-meta { position: absolute; z-index: 4; left: var(--gutter); top: 47vh; max-width: 380px; }
         .hero-meta .label { display: flex; align-items: center; gap: 10px; }
-        .hero-meta .label::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 2px var(--ink); }
+        .hero-meta .label::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--ink); }
         .hero-meta p { margin-top: 14px; font-size: 15.5px; font-weight: 400; color: var(--ink-2); max-width: 36ch; }
         .hero-meta .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; font-size: 13px; font-weight: 600; padding: 12px 18px; border-radius: 999px; border: 1.5px solid var(--ink); background: rgba(255,255,255,.7); transition: background .25s, color .25s; }
-        .hero-meta .cta:hover { background: var(--ink); color: var(--lime); }
+        .hero-meta .cta:hover { background: var(--ink); color: var(--accent); }
         .now-box { position: absolute; z-index: 4; right: var(--gutter); top: 13vh; width: 236px; padding: 16px 18px; border: 1.5px solid var(--ink); border-radius: 14px; background: rgba(255,255,255,.72); backdrop-filter: blur(8px); }
         .now-box .label { display: flex; justify-content: space-between; align-items: center; }
-        .now-box .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 2px var(--ink); animation: pulse 1.8s infinite; }
+        .now-box .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--ink); animation: pulse 1.8s infinite; }
         .now-box .big { font-family: var(--display); font-size: 30px; line-height: 1; text-transform: uppercase; margin-top: 8px; }
         .now-box .sub { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; }
         .hero-scroll { position: absolute; z-index: 4; right: var(--gutter); bottom: 7vh; display: flex; align-items: center; gap: 12px; }
         .hero-scroll .bar { width: 1.5px; height: 46px; background: var(--line); position: relative; overflow: hidden; }
         .hero-scroll .bar::after { content: ''; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--ink); animation: scrollbar 1.8s var(--ease) infinite; }
         @keyframes scrollbar { 0% { top: -100%; } 60%, 100% { top: 100%; } }
-        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px rgba(200,255,46,.6);} 50% { box-shadow: 0 0 0 2px var(--ink), 0 0 0 10px rgba(200,255,46,0);} }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px rgba(154,216,255,.6);} 50% { box-shadow: 0 0 0 2px var(--ink), 0 0 0 10px rgba(154,216,255,0);} }
 
         /* everything after the hero slides over it */
         .after-hero { position: relative; z-index: 5; background: var(--bg); box-shadow: 0 -30px 80px -40px rgba(0,0,0,.25); }
@@ -133,7 +133,7 @@
         /* =========================================================
            MARQUEE
            ========================================================= */
-        .marquee { overflow: hidden; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); background: var(--lime); padding: 14px 0; }
+        .marquee { overflow: hidden; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); background: var(--accent); padding: 14px 0; }
         .marquee-track { display: flex; gap: 0; width: max-content; animation: marquee 32s linear infinite; }
         .marquee-track span { font-family: var(--display); text-transform: uppercase; font-size: clamp(28px, 4.2vw, 64px); line-height: 1; padding: 0 22px; display: inline-flex; align-items: center; gap: 22px; white-space: nowrap; }
         .marquee-track span::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
@@ -164,7 +164,7 @@
         .stat:last-child { border-right: 0; }
         .stat + .stat { padding-left: 24px; }
         .stat .n { font-family: var(--display); font-size: clamp(48px, 5.6vw, 88px); line-height: 1; }
-        .stat .n em { font-style: normal; color: var(--lime-deep); }
+        .stat .n em { font-style: normal; color: var(--accent-deep); }
         .stat .l { margin-top: 10px; color: var(--ink-2); font-size: 14px; }
 
         /* =========================================================
@@ -181,7 +181,7 @@
         #quantum p { color: var(--ink-2); font-size: clamp(15px, 1.2vw, 18px); max-width: 50ch; }
         .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
         .pill { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 9px 14px; border: 1.5px solid var(--ink); border-radius: 999px; background: #fff; }
-        .pill.lime { background: var(--lime); }
+        .pill.accent { background: var(--accent); }
 
         /* =========================================================
            EXPERIENCE — pinned horizontal strip
@@ -192,7 +192,7 @@
         .exp-track { display: flex; gap: 24px; padding: 0 var(--gutter); will-change: transform; }
         .exp-card { flex: 0 0 auto; width: min(520px, 78vw); min-height: 56vh; border: 1.5px solid var(--ink); border-radius: 18px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg); transition: transform .3s; }
         .exp-card.hi { background: var(--ink); color: #fff; }
-        .exp-card.lime { background: var(--lime); }
+        .exp-card.accent { background: var(--accent); }
         .exp-card.hi .idx, .exp-card.hi .label, .exp-card.hi .exp-co { color: rgba(255,255,255,.6); }
         .exp-top { display: flex; justify-content: space-between; align-items: flex-start; }
         .exp-title { font-family: var(--display); text-transform: uppercase; font-weight: 400; line-height: .95; font-size: clamp(34px, 3.4vw, 54px); margin-top: 60px; }
@@ -218,9 +218,9 @@
         #freelance { background: var(--bg-2); }
         .fl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .fl-card { background: var(--bg); border: 1.5px solid var(--ink); border-radius: 18px; padding: 34px; transition: transform .35s var(--ease), box-shadow .35s; }
-        .fl-card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--lime); }
+        .fl-card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--accent); }
         .fl-card .co { font-family: var(--display); text-transform: uppercase; font-size: 40px; line-height: 1; }
-        .fl-card .role { color: var(--lime-deep); font-size: 11px; font-weight: 700; letter-spacing: .12em; margin-top: 8px; }
+        .fl-card .role { color: var(--accent-deep); font-size: 11px; font-weight: 700; letter-spacing: .12em; margin-top: 8px; }
         .fl-card .url { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 13px; font-weight: 500; color: var(--ink-2); border-bottom: 1.5px solid var(--line); }
         .fl-card .url:hover { color: var(--ink); border-color: var(--ink); }
         .fl-card p { color: var(--ink-2); font-size: 15px; margin-top: 18px; }
@@ -230,12 +230,12 @@
            ========================================================= */
         .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .cert { border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--bg); cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s; }
-        .cert:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--lime); }
+        .cert:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--accent); }
         .cert-media { aspect-ratio: 4 / 3; background: var(--bg-2); position: relative; overflow: hidden; border-bottom: 1.5px solid var(--ink); }
         .cert-media img { width: 100%; height: 100%; object-fit: contain; padding: 22px; transition: transform .6s var(--ease); }
         .cert:hover .cert-media img { transform: scale(1.04); }
         .cert-art { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--ink); }
-        .cert-art.lime { background: var(--lime); }
+        .cert-art.accent { background: var(--accent); }
         .cert-art.dark { background: var(--ink); color: #fff; }
         .cert-art.dark .sm { color: rgba(255,255,255,.65); }
         .cert-art.grey { background: #e9e9e4; }
@@ -245,10 +245,10 @@
         .cert-info h4 { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; line-height: 1.3; }
         .cert-info .iss { color: var(--ink-3); font-size: 11px; font-weight: 600; letter-spacing: .1em; margin-top: 6px; }
         .cert-links { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-        .cert-link { font-size: 12.5px; font-weight: 600; border-bottom: 1.5px solid var(--lime); }
-        .cert-link:hover { background: var(--lime); }
+        .cert-link { font-size: 12.5px; font-weight: 600; border-bottom: 1.5px solid var(--accent); }
+        .cert-link:hover { background: var(--accent); }
         .cert-arrow { width: 34px; height: 34px; border: 1.5px solid var(--ink); border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; transition: background .25s; }
-        .cert:hover .cert-arrow { background: var(--lime); }
+        .cert:hover .cert-arrow { background: var(--accent); }
 
         /* =========================================================
            NOW (working on)
@@ -259,9 +259,9 @@
         .now-row h4 { font-weight: 700; font-size: clamp(18px, 1.7vw, 24px); letter-spacing: -0.015em; }
         .now-row p { color: var(--ink-2); font-size: 15px; }
         .status { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; border: 1.5px solid var(--ink); white-space: nowrap; }
-        .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 1.5px var(--ink); }
+        .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1.5px var(--ink); }
         .status.done { background: var(--ink); color: #fff; }
-        .status.done i { background: var(--lime); box-shadow: none; }
+        .status.done i { background: var(--accent); box-shadow: none; }
 
         /* =========================================================
            CONTACT + FOOTER
@@ -270,12 +270,12 @@
         #contact .wrap { padding-bottom: 60px; }
         #contact .label { color: rgba(255,255,255,.55); }
         #contact h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; line-height: .9; font-size: clamp(56px, 11vw, 190px); margin-top: 18px; }
-        #contact h2 em { font-style: normal; color: var(--lime); }
+        #contact h2 em { font-style: normal; color: var(--accent); }
         .contact-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-top: 60px; flex-wrap: wrap; }
         .contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
         .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 1.5px solid rgba(255,255,255,.35); color: #fff; transition: background .25s, color .25s, border-color .25s; }
         .btn:hover { background: #fff; color: var(--ink); border-color: #fff; }
-        .btn.primary { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+        .btn.primary { background: var(--accent); color: var(--ink); border-color: var(--accent); }
         .btn.primary:hover { background: #fff; border-color: #fff; }
         .contact-meta { color: rgba(255,255,255,.55); font-size: 14px; }
         footer { background: var(--ink); color: rgba(255,255,255,.45); padding: 26px var(--gutter); border-top: 1px solid rgba(255,255,255,.12); display: flex; justify-content: space-between; gap: 20px; font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
@@ -290,7 +290,26 @@
         .lightbox-title { margin-top: 16px; color: var(--ink-2); font-size: 14px; font-weight: 500; }
         .lightbox-close { position: fixed; top: 22px; right: 26px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink); background: #fff; font-size: 22px; cursor: pointer; }
         .lightbox-actions { margin-top: 14px; }
-        .lightbox-actions a { font-size: 13px; font-weight: 600; border-bottom: 1.5px solid var(--lime); }
+        .lightbox-actions a { font-size: 13px; font-weight: 600; border-bottom: 1.5px solid var(--accent); }
+
+
+        /* =========================================================
+           QUANTUM DETAILS — small, quiet
+           ========================================================= */
+        /* nav logo: a qubit with an orbit */
+        .nav-logo .q { position: relative; }
+        .nav-logo .q::after { content: ''; position: absolute; inset: -6px; border: 1px solid var(--ink); border-radius: 50%; opacity: .55; animation: orbit 6s linear infinite; }
+        @keyframes orbit { from { transform: rotate(0deg) scaleY(.38); } to { transform: rotate(360deg) scaleY(.38); } }
+        /* marquee separator: a tiny qubit instead of a dot */
+        .marquee-track span::after { width: 14px; height: 14px; background: radial-gradient(circle, var(--ink) 0 32%, transparent 36%); border: 2px solid var(--ink); }
+        /* section heads: the top rule becomes a circuit wire with an H gate, a state and a measurement */
+        .sec-head { position: relative; }
+        .sec-head::after { content: ''; position: absolute; right: 0; top: -12px; width: 86px; height: 22px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 86 22'%3E%3Crect x='1' y='1' width='20' height='20' rx='3' fill='%23fff' stroke='%230f0f10' stroke-width='1.5'/%3E%3Ctext x='11' y='15.5' font-family='Arial' font-weight='700' font-size='12' text-anchor='middle' fill='%230f0f10'%3EH%3C/text%3E%3Ccircle cx='43' cy='11' r='4.5' fill='%239ad8ff' stroke='%230f0f10' stroke-width='1.5'/%3E%3Crect x='65' y='1' width='20' height='20' rx='3' fill='%23fff' stroke='%230f0f10' stroke-width='1.5'/%3E%3Cpath d='M69 15a6 6 0 0 1 12 0' fill='none' stroke='%230f0f10' stroke-width='1.3'/%3E%3Cpath d='M75 15l4-6' stroke='%230f0f10' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain; }
+        /* "in progress" = superposition: the dot flickers between |0> (hollow) and |1> (filled) */
+        .status:not(.done) i { animation: superpose 2.4s steps(1) infinite; }
+        @keyframes superpose { 0%, 100% { background: var(--accent); } 35% { background: transparent; } 55% { background: var(--accent); } 70% { background: transparent; } }
+        /* ket labels read a touch tighter */
+        .label { font-variant-numeric: tabular-nums; }
 
         /* =========================================================
            RESPONSIVE
@@ -342,7 +361,7 @@
         @media (prefers-reduced-motion: reduce) {
             .fade { opacity: 1; transform: none; }
             #story .manifesto .wd { opacity: 1; }
-            .hero-scroll .bar::after, .now-box .dot, .marquee-track { animation: none; }
+            .hero-scroll .bar::after, .now-box .dot, .marquee-track, .nav-logo .q::after, .status i { animation: none !important; }
             #loader { display: none; }
         }
     </style>
@@ -352,7 +371,7 @@
 
 <!-- ============ PRELOADER ============ -->
 <div id="loader" aria-hidden="true">
-    <div class="top"><span class="label">Portfolio &mdash; 2026</span><span class="label">Hamburg, DE</span></div>
+    <div class="top"><span class="label">Initialising qubits&hellip;</span><span class="label">Hamburg, DE</span></div>
     <div class="count" id="loader-count">00</div>
     <div class="name"><span><i>Nicolas</i></span><span><i>Peters Saa</i></span></div>
 </div>
@@ -395,7 +414,7 @@
         <div class="sub">Associate Ambassador &middot; TLS Sales, Hamburg</div>
     </div>
 
-    <div class="hero-scroll" id="hero-scroll"><span class="label">Scroll</span><span class="bar"></span></div>
+    <div class="hero-scroll" id="hero-scroll"><span class="label">Scroll to measure</span><span class="bar"></span></div>
 </section>
 </div>
 
@@ -413,7 +432,7 @@
     <div class="wrap">
         <div class="story-grid">
             <div>
-                <span class="label">01 &mdash; Who I am</span>
+                <span class="label">|01&rang; Who I am</span>
                 <p class="manifesto" id="manifesto">I combine regulatory and quality management expertise with hands-on AI development and value engineering, building intelligent automation, data pipelines and AI-powered solutions at the intersection of healthcare and technology.</p>
             </div>
             <div class="portrait fade">
@@ -441,11 +460,11 @@
         </video>
     </div>
     <div class="content">
-        <span class="label fade">02 &mdash; IBM Quantum</span>
+        <span class="label fade">|10&rang; IBM Quantum</span>
         <h2 class="fade">Ambassador for the <span class="hl">quantum</span> era.</h2>
         <p class="fade">As an IBM Quantum Associate Ambassador I translate qubits, error mitigation and Qiskit into language that boards, clients and regulators understand, and I bring quantum-safe thinking into enterprise IT conversations.</p>
         <div class="badge-row fade">
-            <span class="pill lime">Quantum Associate Ambassador</span>
+            <span class="pill accent">Quantum Associate Ambassador</span>
             <span class="pill">Quantum-Safe Conversations</span>
             <span class="pill">Quantum Business Impact</span>
         </div>
@@ -470,7 +489,7 @@
                 <div class="exp-top"><span class="idx">02</span><span class="label">Oct 2024 &ndash; Mar 2025</span></div>
                 <div><h3 class="exp-title">Associate</h3><div class="exp-co">ZELOS Management Consultants &middot; Hamburg</div><p class="exp-desc">Simplified over 8M lines of client data using VBA. Instructed IT clients on Excel and VBA analytics. Created potential-client analyses for ZELOS.</p></div>
             </article>
-            <article class="exp-card lime">
+            <article class="exp-card accent">
                 <div class="exp-top"><span class="idx">03</span><span class="label">May 2023 &ndash; Oct 2024</span></div>
                 <div><h3 class="exp-title">Junior RA / QM Associate</h3><div class="exp-co">Orthopy Health GmbH &middot; Hamburg</div><p class="exp-desc">Strategic regulatory guidance for global markets. Audits, CAPA implementation, QMS changes, and key regulatory contact.</p></div>
             </article>
@@ -538,7 +557,7 @@
             </div>
 
             <div class="cert fade" onclick="window.open('media/certificates/quantum1/IBM%20Quantum-Safe%20Conversations.pdf','_blank')">
-                <div class="cert-media"><div class="cert-art lime"><div class="big">Q</div><div class="sm">Quantum-Safe<br>Conversations</div></div></div>
+                <div class="cert-media"><div class="cert-art accent"><div class="big">Q</div><div class="sm">Quantum-Safe<br>Conversations</div></div></div>
                 <div class="cert-info"><div><h4>IBM Quantum-Safe Conversations</h4><div class="iss">IBM</div>
                     <div class="cert-links"><a class="cert-link" href="media/certificates/quantum1/Quantum%20Business%20impact.pdf" target="_blank" onclick="event.stopPropagation()">Quantum Business Impact (PDF)</a></div></div><span class="cert-arrow">&nearr;</span></div>
             </div>
@@ -604,7 +623,7 @@
 <!-- ============ CONTACT ============ -->
 <section id="contact">
     <div class="wrap">
-        <span class="label fade">07 &mdash; Let&rsquo;s connect</span>
+        <span class="label fade">|&psi;&rang; Let&rsquo;s connect</span>
         <h2 class="fade">Let&rsquo;s build<br>something <em>entangled.</em></h2>
         <div class="contact-row fade">
             <div class="contact-links">
@@ -805,7 +824,7 @@ if (!reduced) {
 })();
 
 // =========================================================
-// HERO BACKGROUND: monochrome Bloch-sphere qubit with lime state
+// HERO BACKGROUND: monochrome Bloch-sphere qubit with accent state
 // =========================================================
 (function () {
     const cv = document.getElementById('qubit-canvas'), ctx = cv.getContext('2d');
@@ -823,7 +842,7 @@ if (!reduced) {
         const cx = W * (mobile ? 0.5 : 0.56) + (mx - 0.5) * 24, cy = H * 0.5 + (my - 0.5) * 16, R = Math.min(W, H) * (mobile ? 0.36 : 0.34);
         // soft halo
         const gl = ctx.createRadialGradient(cx, cy, R * 0.3, cx, cy, R * 1.9);
-        gl.addColorStop(0, 'rgba(200,255,46,0.16)'); gl.addColorStop(0.5, 'rgba(0,0,0,0.02)'); gl.addColorStop(1, 'rgba(0,0,0,0)');
+        gl.addColorStop(0, 'rgba(154,216,255,0.16)'); gl.addColorStop(0.5, 'rgba(0,0,0,0.02)'); gl.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(cx, cy, R * 1.9, 0, Math.PI * 2); ctx.fill();
         // wireframe
         ctx.lineWidth = 1;
@@ -845,8 +864,8 @@ if (!reduced) {
         const th = Math.PI / 3 + Math.sin(t * 0.8) * 0.28, ph = t * 1.1;
         const vx = cx + R * Math.sin(th) * Math.cos(ph), vy = cy - R * Math.cos(th) + R * 0.28 * Math.sin(th) * Math.sin(ph);
         ctx.strokeStyle = 'rgba(15,15,16,0.85)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(vx, vy); ctx.stroke();
-        ctx.fillStyle = 'rgba(200,255,46,0.35)'; ctx.beginPath(); ctx.arc(vx, vy, 16 + Math.sin(t * 4) * 3, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#c8ff2e'; ctx.beginPath(); ctx.arc(vx, vy, 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(154,216,255,0.35)'; ctx.beginPath(); ctx.arc(vx, vy, 16 + Math.sin(t * 4) * 3, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#9ad8ff'; ctx.beginPath(); ctx.arc(vx, vy, 7, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = '#0f0f10'; ctx.lineWidth = 1.5; ctx.stroke();
         // orbiting particles
         orbs.forEach(o => {
@@ -882,13 +901,49 @@ if (!reduced) {
                 if (x + step <= W) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + step, y); ctx.stroke(); }
                 if (y + step <= H && (i + j) % 2 === 0) { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + step); ctx.stroke(); }
                 const r = 4 + 2.5 * ph;
-                ctx.fillStyle = (i + j) % 3 === 0 ? `rgba(143,196,0,${0.35 + 0.45 * ph})` : `rgba(15,15,16,${0.12 + 0.25 * ph})`;
+                ctx.fillStyle = (i + j) % 3 === 0 ? `rgba(26,143,227,${0.35 + 0.45 * ph})` : `rgba(15,15,16,${0.12 + 0.25 * ph})`;
                 ctx.beginPath(); ctx.arc(x, y, Math.max(r, 1.5), 0, Math.PI * 2); ctx.fill();
-                if (ph > 0.85) { ctx.strokeStyle = 'rgba(143,196,0,0.5)'; ctx.beginPath(); ctx.arc(x, y, r + 8, 0, Math.PI * 2); ctx.stroke(); }
+                if (ph > 0.85) { ctx.strokeStyle = 'rgba(26,143,227,0.5)'; ctx.beginPath(); ctx.arc(x, y, r + 8, 0, Math.PI * 2); ctx.stroke(); }
             }
         }
     }
     draw();
+})();
+
+// =========================================================
+// LIVE FAVICON: particles orbiting a qubit (Chrome/Firefox/Edge; others keep the SVG)
+// =========================================================
+(function () {
+    if (reduced) return;
+    const link = document.querySelector('link[rel="icon"]');
+    if (!link) return;
+    const S = 64, cv = document.createElement('canvas'); cv.width = cv.height = S;
+    const ctx = cv.getContext('2d');
+    const parts = Array.from({ length: 9 }, (_, i) => ({ a: i / 9 * Math.PI * 2, r: 20 + (i % 3) * 3.5, s: 0.05 + (i % 4) * 0.018, tilt: 0.3 + (i % 3) * 0.12, sz: 1.6 + (i % 2) }));
+    let t = 0;
+    function frame() {
+        t += 1;
+        ctx.clearRect(0, 0, S, S);
+        ctx.fillStyle = '#0f0f10'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(0, 0, S, S, 14) : ctx.rect(0, 0, S, S); ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.arc(32, 32, 17, 0, Math.PI * 2); ctx.stroke();
+        ctx.strokeStyle = 'rgba(255,255,255,.4)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(32, 32, 17, 6, 0, 0, Math.PI * 2); ctx.stroke();
+        const ph = t * 0.09, vx = 32 + 12 * Math.cos(ph), vy = 26 - 5 * Math.sin(ph);
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(32, 32); ctx.lineTo(vx, vy); ctx.stroke();
+        ctx.fillStyle = '#9ad8ff'; ctx.beginPath(); ctx.arc(vx, vy, 5, 0, Math.PI * 2); ctx.fill();
+        parts.forEach(p => {
+            p.a += p.s;
+            const x = 32 + Math.cos(p.a) * p.r * 1.35, y = 32 + Math.sin(p.a) * p.r * p.tilt;
+            if (x < 2 || x > 62) return;
+            ctx.globalAlpha = 0.35 + 0.65 * (Math.sin(p.a) * 0.5 + 0.5);
+            ctx.fillStyle = p.sz > 2 ? '#9ad8ff' : '#fff';
+            ctx.beginPath(); ctx.arc(x, y, p.sz, 0, Math.PI * 2); ctx.fill();
+            ctx.globalAlpha = 1;
+        });
+        link.type = 'image/png';
+        link.href = cv.toDataURL('image/png');
+    }
+    frame();
+    setInterval(frame, 120);
 })();
 
 // =========================================================
