@@ -1,24 +1,19 @@
-# Video slots
+# Video slot
 
-Drop the files below into this folder. The page detects them automatically and
-switches from the animated canvas placeholder to the video. No code change needed.
+The live design has one optional video. Drop the file into this folder and the page picks it up automatically, with no code change. Until the file exists, the section shows an animated qubit-lattice canvas.
 
 | File | Used in | Length | Size / format |
 |---|---|---|---|
-| `hero-qubit.mp4` (+ optional `hero-qubit.webm`) | Hero "window" you scroll into | 8-12 s seamless loop | 1920x1080, H.264, no audio, under ~6 MB |
-| `quantum-chip.mp4` (+ optional `quantum-chip.webm`) | "IBM Quantum" feature section background | 10-15 s seamless loop | 1920x1080, H.264, no audio, under ~8 MB |
+| `quantum-chip.mp4` (+ optional `quantum-chip.webm`) | Background of the "IBM Quantum" section | 10-15 s seamless loop | 1920x1080, H.264, no audio, under ~8 MB |
 
-## Brief 1: hero-qubit
-A single qubit / Bloch sphere on a white or very light (#f4f4f4) background.
-Thin dark wireframe sphere, a glowing blue-to-violet state vector slowly precessing,
-faint particles orbiting. Camera almost static, very slow drift. No text, no logos.
-Must loop seamlessly (first and last frame identical). Bright, airy, lots of white.
+## Brief: quantum-chip
+A macro shot of a superconducting quantum chip or the gold "chandelier" cryostat. Use cool, light tones: silver, white and soft light-blue highlights (`#9ad8ff`) on a light background. The camera moves in a slow dolly or orbit. Keep the left third of the frame calm, because the text sits there. No text, no logos. It must loop seamlessly, with the first and last frames identical.
 
-## Brief 2: quantum-chip
-Macro shot of a superconducting quantum chip or the gold "chandelier" cryostat,
-cool tones (silver, gold, blue highlights) on a light background, slow dolly or
-orbit. Left third of the frame should be calm (text sits there). No text, no logos.
-Must loop seamlessly.
+## Export tips
+Export at 24-30 fps and strip the audio:
 
-Tips: export at 24-30 fps, use two-pass H.264 (CRF 22-26), strip audio.
-`ffmpeg -i in.mp4 -an -c:v libx264 -crf 24 -preset slow -movflags +faststart hero-qubit.mp4`
+```
+ffmpeg -i in.mp4 -an -c:v libx264 -crf 24 -preset slow -movflags +faststart quantum-chip.mp4
+```
+
+Note: the older `quantum-redesign` branch also used a `hero-qubit.mp4` slot. The live design draws the hero qubit on a canvas, so it doesn't need that file.
