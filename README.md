@@ -1,6 +1,6 @@
 # Personal Portfolio — Nicolas Peters Saa
 
-A single-file personal portfolio with an animated constellation background, scroll reveal effects, a certificate lightbox, and a mobile hamburger nav. No frameworks, no build tools, no dependencies beyond a local dev server.
+A single-file, scroll-driven portfolio: white, quantum-inspired, IBM Plex typography. Lenis smooth scroll + GSAP ScrollTrigger from CDN, no build step.
 
 ---
 
@@ -9,10 +9,18 @@ A single-file personal portfolio with an animated constellation background, scro
 | File | Purpose |
 |---|---|
 | `index.html` | Everything — all HTML, CSS, and JS in one file |
-| `media/favicon.svg` | SVG favicon (N-letterform + cyan node dots) |
+| `media/video/` | Two optional video slots (see `media/video/README.md`); animated canvas placeholders show until the files exist |
+| `media/favicon.svg` | SVG favicon |
 | `media/picturesofme/` | Profile photo |
 | `media/certificates/` | Certificate images and PDFs |
 | `package.json` | Dev server scripts only |
+
+## Signature moments
+
+- **Hero "quantum window"**: the Bloch-sphere window expands to fill the screen as you scroll into it (pinned, scrubbed).
+- **Story**: manifesto text reveals word by word tied to scroll; stats count up.
+- **Experience**: pinned horizontal timeline on desktop, stacked cards on mobile.
+- `prefers-reduced-motion` disables pinning and smooth scroll.
 
 ---
 
