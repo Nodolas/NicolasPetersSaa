@@ -14,7 +14,8 @@ A single-file, scroll-driven portfolio with a white, quantum-inspired look. Blac
 | `media/picturesofme/headshot-cut.webp` | Transparent cut-out portrait used in the hero |
 | `media/picturesofme/headshot-web.jpg` | Web-sized portrait for the About section and link previews |
 | `media/picturesofme/Headshot.jpg` | Original full-resolution photo, the source for both files above |
-| `media/certificates/` | Certificate images and PDFs |
+| `media/certificates/` | Certificate PDFs and original images |
+| `media/certificates/badges/` | The picture shown on each certificate card (Credly badge images and previews of the PDFs) |
 | `media/video/` | Optional background video for the IBM Quantum section, see `media/video/README.md` |
 | `media/favicon.svg` | Static qubit icon, the fallback for browsers that don't animate the favicon |
 | `media/apple-touch-icon.png` | 180px home-screen icon for phones |
@@ -31,10 +32,11 @@ In order from top to bottom:
 2. **Hero.** "NICOLAS" sits behind the cut-out portrait and "PETERS SAA" sits in front. An animated Bloch-sphere qubit is drawn on a canvas behind everything and follows the mouse slightly. The hero is sticky: on scroll the name lines drift apart, the photo shrinks, and the rest of the page slides up over it.
 3. **Ticker strip.** A light-blue marquee with qubit-ring separators.
 4. **About.** The text reveals word by word as you scroll, next to the portrait. Four stats count up.
-5. **IBM Quantum.** A full-screen section over an animated qubit-lattice canvas, or over a video if `media/video/quantum-chip.mp4` exists.
+5. **IBM Quantum.** A full-screen section over an animated qubit-lattice canvas, or over a video if `media/video/quantum-chip.mp4` exists. The three pills are tabs: clicking one swaps the headline, text and Credly link above them.
 6. **Experience.** Pinned horizontal scroll on desktop, stacked cards on mobile.
-7. **Skills, Freelance, Certifications, Currently building.** Each section header rule ends in a tiny circuit glyph: an H gate, a qubit and a measurement.
-8. **Contact** and footer.
+7. **Certifications** are grouped into four stacks of cards (Quantum, AI & Innovation, Cisco Black Belt, Business & Quality). The arrows, a swipe, or a click on a card peeking out behind flips through a stack. Clicking the top card opens its verification page on Credly or Udemy, or the PDF when there is none.
+8. **Skills, Freelance, Currently building.** Each section header rule ends in a tiny circuit glyph: an H gate, a qubit and a measurement.
+9. **Contact** and footer.
 
 Small quantum details: ket-style section labels such as `|01⟩`, a spinning orbit around the nav logo dot, "In progress" dots that flicker between hollow and filled, and a favicon with particles orbiting a qubit. The favicon is animated by JS in Chrome, Edge and Firefox. Other browsers show the static SVG.
 
@@ -58,21 +60,21 @@ All content lives in `index.html`. Search for these to find each part:
 | Experience cards | `class="exp-card` |
 | Skills | `<!-- ============ SKILLS` |
 | Freelance cards | `class="fl-card` |
-| Certificate cards | `class="cert fade"` |
+| Certificate stacks | `class="deck-group` |
 | "Currently building" rows | `class="now-row` |
 | Email and social links | `mailto:` / `linkedin.com` / `github.com/Nodolas` |
 | Accent colour | `--accent:` in `:root`, plus `154,216,255` and `#9ad8ff` in the canvas code |
 
-**Add a certificate.** Put the image or PDF in a folder under `media/certificates/`, then copy an existing card:
+**Add a certificate.** Save its picture in `media/certificates/badges/` (for Credly badges, the badge image; for a PDF, a screenshot of the first page). Then copy a card inside the right `<div class="deck" data-deck>`:
 
 ```html
-<div class="cert fade" onclick="openLightbox('media/certificates/folder/image.png', 'media/certificates/folder/file.pdf', 'Title')">
-    <div class="cert-media"><img src="media/certificates/folder/image.png" alt="Title" loading="lazy"></div>
-    <div class="cert-info"><div><h4>Title</h4><div class="iss">ISSUER</div></div><span class="cert-arrow">&nearr;</span></div>
-</div>
+<a class="card" href="https://www.credly.com/badges/<id>/public_url" target="_blank" rel="noopener">
+    <div class="card-media"><img src="media/certificates/badges/name.png" alt="Title" loading="lazy"></div>
+    <div class="card-info"><h4>Title</h4><div class="iss">Issuer</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+</a>
 ```
 
-Pass `null` instead of the PDF path if there is no PDF. For a PDF-only certificate, copy one of the cards that uses `window.open(...)` and a `cert-art` tile.
+No verification link? Point `href` at the PDF and use `View certificate (PDF) &nearr;` as the action text without the `vchk` check mark. Add `doc` to `card-media` for certificate-page images so they get a paper shadow. Update the count in that group's `deck-head`. The stack, counter and arrows set themselves up.
 
 **Mark a project as done.** In "Currently building", change `class="status"` to `class="status done"` and the text to `Complete`.
 

@@ -181,9 +181,16 @@
         #quantum .content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--gutter); max-width: 820px; }
         #quantum h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; line-height: .92; font-size: clamp(48px, 7vw, 120px); margin: 18px 0 22px; }
         #quantum p { color: var(--ink-2); font-size: clamp(15px, 1.2vw, 18px); max-width: 50ch; }
+        .q-panels { display: grid; }
+        .q-panel { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s .45s; }
+        .q-panel.on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+        .q-verify { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; font-weight: 600; border-bottom: 1.5px solid var(--accent-deep); }
+        .q-verify:hover { color: var(--accent-deep); }
         .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
-        .pill { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 9px 14px; border: 1.5px solid var(--ink); border-radius: 999px; background: #fff; }
-        .pill.accent { background: var(--accent); }
+        .pill { font-family: inherit; color: var(--ink); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 9px 14px; border: 1.5px solid var(--ink); border-radius: 999px; background: #fff; cursor: pointer; transition: background .25s, transform .25s var(--ease); }
+        .pill:hover { transform: translateY(-2px); }
+        .pill[aria-selected="true"] { background: var(--accent); }
+        .pill:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; }
 
         /* =========================================================
            EXPERIENCE — pinned horizontal strip
@@ -192,11 +199,11 @@
         #experience .exp-head { padding: clamp(80px, 12vw, 160px) var(--gutter) 40px; max-width: 1500px; margin: 0 auto; }
         .exp-viewport { height: 100vh; display: flex; align-items: center; }
         .exp-track { display: flex; gap: 24px; padding: 0 var(--gutter); will-change: transform; }
-        .exp-card { flex: 0 0 auto; width: min(520px, 78vw); min-height: 56vh; border: 1.5px solid var(--ink); border-radius: 18px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg); transition: transform .3s; }
-        .exp-card.hi { background: var(--ink); color: #fff; }
-        .exp-card.accent { background: var(--accent); }
-        .exp-card.hi .idx, .exp-card.hi .label, .exp-card.hi .exp-co { color: rgba(255,255,255,.6); }
+        .exp-card { flex: 0 0 auto; width: min(520px, 78vw); min-height: 56vh; border: 1.5px solid var(--ink); border-radius: 18px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg); transition: box-shadow .35s; }
+        .exp-card:hover { box-shadow: 8px 8px 0 var(--accent); }
         .exp-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .exp-top .label { display: inline-flex; align-items: center; gap: 8px; }
+        .exp-top .live { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--ink); animation: pulse 1.8s infinite; }
         .exp-title { font-family: var(--display); text-transform: uppercase; font-weight: 400; line-height: .95; font-size: clamp(34px, 3.4vw, 54px); margin-top: 60px; }
         .exp-co { color: var(--ink-2); font-size: 15px; margin-top: 10px; font-weight: 500; }
         .exp-desc { color: inherit; opacity: .78; font-size: 15px; margin-top: 26px; max-width: 46ch; }
@@ -230,27 +237,39 @@
         /* =========================================================
            CERTIFICATIONS
            ========================================================= */
-        .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .cert { border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--bg); cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s; }
-        .cert:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--accent); }
-        .cert-media { aspect-ratio: 4 / 3; background: var(--bg-2); position: relative; overflow: hidden; border-bottom: 1.5px solid var(--ink); }
-        .cert-media img { width: 100%; height: 100%; object-fit: contain; padding: 22px; transition: transform .6s var(--ease); }
-        .cert:hover .cert-media img { transform: scale(1.04); }
-        .cert-art { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--ink); }
-        .cert-art.accent { background: var(--accent); }
-        .cert-art.dark { background: var(--ink); color: #fff; }
-        .cert-art.dark .sm { color: rgba(255,255,255,.65); }
-        .cert-art.grey { background: #e9e9e4; }
-        .cert-art .big { font-family: var(--display); font-size: 64px; line-height: 1; }
-        .cert-art .sm { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); text-align: center; }
-        .cert-info { padding: 18px 20px 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-        .cert-info h4 { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; line-height: 1.3; }
-        .cert-info .iss { color: var(--ink-3); font-size: 11px; font-weight: 600; letter-spacing: .1em; margin-top: 6px; }
-        .cert-links { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-        .cert-link { font-size: 12.5px; font-weight: 600; border-bottom: 1.5px solid var(--accent); }
-        .cert-link:hover { background: var(--accent); }
-        .cert-arrow { width: 34px; height: 34px; border: 1.5px solid var(--ink); border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; transition: background .25s; }
-        .cert:hover .cert-arrow { background: var(--accent); }
+        /* one stack of cards per group; JS sets --d (depth) on each card and cycles them */
+        .cert-note { display: flex; align-items: flex-start; gap: 10px; max-width: 80ch; margin-bottom: clamp(30px, 4vw, 50px); font-size: 14px; color: var(--ink-2); }
+        .cert-note .vchk { margin-top: 1px; }
+        .vchk { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); border: 1.5px solid var(--ink); display: inline-grid; place-items: center; flex: 0 0 auto; }
+        .vchk::after { content: ''; width: 7px; height: 4px; border: solid var(--ink); border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
+        .deck-groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 32px; }
+        .deck-head { display: flex; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+        .deck-head h3 { font-weight: 700; letter-spacing: -0.02em; font-size: clamp(20px, 1.6vw, 24px); }
+        .deck-head .cnt { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
+        .deck { position: relative; aspect-ratio: 4 / 5; margin: 44px 30px 0 0; --off: 9px; --rot: 2.2deg; touch-action: pan-y; }
+        .deck:hover { --off: 14px; --rot: 3.4deg; }
+        .card { position: absolute; inset: 0; display: flex; flex-direction: column; border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--bg);
+            --d: 0; z-index: calc(20 - var(--d)); transform-origin: 50% 100%;
+            transform: translate(calc(var(--d) * var(--off)), calc(var(--d) * var(--off) * -1)) rotate(calc(var(--d) * var(--rot))) scale(calc(1 - var(--d) * .035));
+            transition: transform .55s var(--ease-out), opacity .4s, box-shadow .35s; }
+        .card.hidden { opacity: 0; pointer-events: none; }
+        .card.back { cursor: pointer; }
+        .card.back .card-info { opacity: .35; }
+        .card.top:hover { box-shadow: 8px 8px 0 var(--accent); }
+        .card.out { transform: translate(-60%, 14px) rotate(-10deg); opacity: 0; }
+        .card-media { flex: 1; min-height: 0; background: var(--bg-2); border-bottom: 1.5px solid var(--ink); }
+        .card-media img { width: 100%; height: 100%; object-fit: contain; padding: 20px; }
+        .card-media.doc img { padding: 14px; filter: drop-shadow(0 6px 14px rgba(0,0,0,.12)); }
+        .card-info { padding: 16px 18px 18px; transition: opacity .3s; }
+        .card-info h4 { font-weight: 700; font-size: 15.5px; letter-spacing: -0.01em; line-height: 1.3; }
+        .card-info .iss { color: var(--ink-3); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-top: 5px; }
+        .card-act { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12.5px; font-weight: 600; border-bottom: 1.5px solid var(--accent); }
+        .card.top:hover .card-act { border-color: var(--ink); }
+        .deck-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; margin-right: 30px; }
+        .deck-nav button { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--bg); color: var(--ink); font-size: 16px; cursor: pointer; transition: background .25s; }
+        .deck-nav button:hover { background: var(--accent); }
+        .deck-nav button:focus-visible, .card:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; }
+        .deck-pos { font-size: 12px; font-weight: 600; letter-spacing: .1em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 
         /* =========================================================
            NOW (working on)
@@ -317,7 +336,7 @@
            RESPONSIVE
            ========================================================= */
         @media (max-width: 1024px) {
-            .cert-grid { grid-template-columns: repeat(2, 1fr); }
+            .deck-groups { grid-template-columns: repeat(2, 1fr); gap: 56px 40px; }
             .stats { grid-template-columns: repeat(2, 1fr); }
             .stat:nth-child(2) { border-right: 0; }
             .stat:nth-child(3) { padding-left: 0; border-top: 1px solid var(--line); }
@@ -330,14 +349,16 @@
             .hero-photo { right: 8vw; height: 88vh; }
             .now-box { display: none; }
         }
-        @media (max-width: 768px) {
-            #nav { padding: 14px 20px; }
-            #nav ul { position: fixed; top: 0; right: 0; height: 100vh; width: min(320px, 82vw); background: #fff; flex-direction: column; gap: 0; padding: 90px 28px; transform: translateX(100%); transition: transform .4s var(--ease); box-shadow: -20px 0 60px -30px rgba(0,0,0,.25); }
-            #nav ul.open { transform: none; }
+        @media (max-width: 1100px) {
+            #nav ul { position: fixed; top: 0; right: 0; height: 100vh; height: 100dvh; width: min(320px, 82vw); background: #fff; flex-direction: column; gap: 0; padding: 90px 28px; overflow-y: auto; transform: translateX(100%); visibility: hidden; transition: transform .4s var(--ease), visibility 0s .4s; box-shadow: -20px 0 60px -30px rgba(0,0,0,.25); }
+            #nav ul.open { transform: none; visibility: visible; transition-delay: 0s; }
             #nav ul li a { display: block; padding: 14px 0; font-size: 18px; border-bottom: 1px solid var(--line); }
             #nav ul a::after { display: none; }
             .nav-cta { display: none; }
             .nav-hamburger { display: flex; position: relative; z-index: 2; }
+        }
+        @media (max-width: 768px) {
+            #nav { padding: 14px 20px; }
             .hero-track { height: 150vh; }
             .name-back { top: 11vh; font-size: 27vw; left: 20px; }
             .name-front { bottom: 6vh; font-size: 15vw; left: 20px; }
@@ -353,21 +374,28 @@
             .exp-card { width: 100%; min-height: 0; }
             .exp-title { margin-top: 30px; }
             .exp-end { display: none; }
-            .fl-grid, .cert-grid { grid-template-columns: 1fr; }
+            .fl-grid { grid-template-columns: 1fr; }
+            .deck-groups { gap: 48px 28px; }
+            .deck { margin: 38px 24px 0 0; --off: 7px; }
+            .deck-nav { margin-right: 24px; }
             .now-row { grid-template-columns: 1fr; gap: 8px; }
             .now-row .idx { order: -1; }
             #quantum { height: auto; min-height: 0; padding: 120px 0; }
             #quantum .media::after { background: linear-gradient(180deg, rgba(245,245,242,.92), rgba(245,245,242,.8)); }
             footer { flex-direction: column; }
         }
+        @media (max-width: 560px) {
+            .deck-groups { grid-template-columns: 1fr; }
+        }
         @media (prefers-reduced-motion: reduce) {
             .fade { opacity: 1; transform: none; }
             #story .manifesto .wd { opacity: 1; }
-            .hero-scroll .bar::after, .now-box .dot, .marquee-track, .nav-logo .q::after, .status i { animation: none !important; }
+            .hero-scroll .bar::after, .now-box .dot, .marquee-track, .nav-logo .q::after, .status i, .exp-top .live { animation: none !important; }
+            .card, .q-panel { transition: none !important; }
             #loader { display: none; }
         }
     </style>
-    <noscript><style>.fade, #story .manifesto .wd { opacity: 1 !important; transform: none !important; } #loader { display: none; }</style></noscript>
+    <noscript><style>.fade, #story .manifesto .wd { opacity: 1 !important; transform: none !important; } #loader { display: none; } .deck { aspect-ratio: auto; display: grid; gap: 16px; } .card { position: relative; transform: none; min-height: 380px; } .deck-nav { display: none; }</style></noscript>
 </head>
 <body class="loading">
 
@@ -463,12 +491,27 @@
     </div>
     <div class="content">
         <span class="label fade">|10&rang; IBM Quantum</span>
-        <h2 class="fade">Ambassador for the <span class="hl">quantum</span> era.</h2>
-        <p class="fade">As an IBM Quantum Associate Ambassador I translate qubits, error mitigation and Qiskit into language that boards, clients and regulators understand, and I bring quantum-safe thinking into enterprise IT conversations.</p>
-        <div class="badge-row fade">
-            <span class="pill accent">Quantum Associate Ambassador</span>
-            <span class="pill">Quantum-Safe Conversations</span>
-            <span class="pill">Quantum Business Impact</span>
+        <div class="q-panels fade">
+            <div class="q-panel on" id="q-panel-0" role="tabpanel" aria-labelledby="q-tab-0">
+                <h2>Ambassador for the <span class="hl">quantum</span> era.</h2>
+                <p>As an IBM Quantum Associate Ambassador I translate qubits, error mitigation and Qiskit into language that boards, clients and regulators understand, and I bring quantum-safe thinking into enterprise IT conversations.</p>
+                <a class="q-verify" href="https://www.credly.com/badges/4009a43d-2cd8-47e7-84a3-0209c7ac0860/public_url" target="_blank" rel="noopener"><span class="vchk"></span>Verify on Credly &nearr;</a>
+            </div>
+            <div class="q-panel" id="q-panel-1" role="tabpanel" aria-labelledby="q-tab-1">
+                <h2>Getting ready for <span class="hl">Q-Day.</span></h2>
+                <p>Large quantum computers will break the public-key cryptography most companies rely on today, and data harvested now can be decrypted later. I help teams understand that risk, find where their cryptography lives, and plan the move to post-quantum standards.</p>
+                <a class="q-verify" href="https://www.credly.com/badges/e93eb9f7-449e-4739-9fe5-6b98e8680858/public_url" target="_blank" rel="noopener"><span class="vchk"></span>Verify on Credly &nearr;</a>
+            </div>
+            <div class="q-panel" id="q-panel-2" role="tabpanel" aria-labelledby="q-tab-2">
+                <h2>Where quantum <span class="hl">pays off</span> first.</h2>
+                <p>Quantum advantage will arrive one use case at a time: optimisation, simulating molecules and materials, and new kinds of machine learning. I help business leaders separate real opportunities from hype, judge when they become relevant, and build a roadmap.</p>
+                <a class="q-verify" href="https://www.credly.com/badges/83ed02d5-087c-44eb-9a7d-c96b81c43bb0/public_url" target="_blank" rel="noopener"><span class="vchk"></span>Verify on Credly &nearr;</a>
+            </div>
+        </div>
+        <div class="badge-row fade" role="tablist" aria-label="IBM Quantum credentials">
+            <button class="pill" id="q-tab-0" role="tab" aria-selected="true" aria-controls="q-panel-0">Quantum Associate Ambassador</button>
+            <button class="pill" id="q-tab-1" role="tab" aria-selected="false" aria-controls="q-panel-1" tabindex="-1">Quantum-Safe Conversations</button>
+            <button class="pill" id="q-tab-2" role="tab" aria-selected="false" aria-controls="q-panel-2" tabindex="-1">Quantum Business Foundations</button>
         </div>
     </div>
 </section>
@@ -483,15 +526,15 @@
     </div>
     <div class="exp-viewport">
         <div class="exp-track" id="exp-track">
-            <article class="exp-card hi">
-                <div class="exp-top"><span class="idx">01</span><span class="label">Current</span></div>
+            <article class="exp-card">
+                <div class="exp-top"><span class="idx">01</span><span class="label"><span class="live"></span>Current</span></div>
                 <div><h3 class="exp-title">Master Student, IBM TLS Sales</h3><div class="exp-co">IBM &middot; Hamburg</div><p class="exp-desc">Dual-study programme combining master-level coursework with hands-on work in IBM Technology Lifecycle Services sales. IBM Quantum Associate Ambassador.</p></div>
             </article>
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">02</span><span class="label">Oct 2024 &ndash; Mar 2025</span></div>
                 <div><h3 class="exp-title">Associate</h3><div class="exp-co">ZELOS Management Consultants &middot; Hamburg</div><p class="exp-desc">Simplified over 8M lines of client data using VBA. Instructed IT clients on Excel and VBA analytics. Created potential-client analyses for ZELOS.</p></div>
             </article>
-            <article class="exp-card accent">
+            <article class="exp-card">
                 <div class="exp-top"><span class="idx">03</span><span class="label">May 2023 &ndash; Oct 2024</span></div>
                 <div><h3 class="exp-title">Junior RA / QM Associate</h3><div class="exp-co">Orthopy Health GmbH &middot; Hamburg</div><p class="exp-desc">Strategic regulatory guidance for global markets. Audits, CAPA implementation, QMS changes, and key regulatory contact.</p></div>
             </article>
@@ -550,61 +593,105 @@
 <!-- ============ CERTIFICATIONS ============ -->
 <section id="certifications">
     <div class="wrap">
-        <div class="sec-head fade"><h2>Certifications</h2><p>Credentials across AI, quantum, cloud, quality management and emerging tech.</p></div>
-        <div class="cert-grid">
-
-            <div class="cert fade" onclick="openLightbox('media/certificates/quantum1/ibm-quantum-ambassador.jpeg',null,'IBM Quantum Associate Ambassador')">
-                <div class="cert-media"><img src="media/certificates/quantum1/ibm-quantum-ambassador.jpeg" alt="IBM Quantum Associate Ambassador badge" loading="lazy"></div>
-                <div class="cert-info"><div><h4>Quantum Associate Ambassador &mdash; Intermediate</h4><div class="iss">IBM QUANTUM</div></div><span class="cert-arrow">&nearr;</span></div>
+        <div class="sec-head fade"><h2>Certifications</h2><p>Credentials across quantum, AI, enterprise sales and quality management, grouped into stacks.</p></div>
+        <p class="cert-note fade"><span class="vchk"></span>Certificates are easy to fake in the AI era, so every card with this mark opens its public record at the issuer. Click a card to check it, or flip through each stack with the arrows.</p>
+        <div class="deck-groups">
+        <div class="deck-group fade">
+            <div class="deck-head"><span class="idx">01</span><h3>Quantum</h3><span class="cnt">5 &middot; all verified</span></div>
+            <div class="deck" data-deck>
+                <a class="card" href="https://www.credly.com/badges/4009a43d-2cd8-47e7-84a3-0209c7ac0860/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/quantum-associate-ambassador.png" alt="IBM Quantum Associate Ambassador" loading="lazy"></div>
+                    <div class="card-info"><h4>IBM Quantum Associate Ambassador</h4><div class="iss">IBM Quantum</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/e93eb9f7-449e-4739-9fe5-6b98e8680858/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/quantum-safe-conversations.png" alt="IBM Quantum-Safe Conversations" loading="lazy"></div>
+                    <div class="card-info"><h4>IBM Quantum-Safe Conversations</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/83ed02d5-087c-44eb-9a7d-c96b81c43bb0/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/quantum-business-foundations.png" alt="Quantum Business Foundations" loading="lazy"></div>
+                    <div class="card-info"><h4>Quantum Business Foundations</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/87aa2a45-1483-40b1-9471-2ae1f1dab3f3/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/quantum-hpc.png" alt="Integrating Quantum and High-Performance Computing" loading="lazy"></div>
+                    <div class="card-info"><h4>Integrating Quantum and High-Performance Computing</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/77a39b83-ae90-46b1-b67e-f2f30758b3f1/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/basics-quantum-information.png" alt="Basics of Quantum Information" loading="lazy"></div>
+                    <div class="card-info"><h4>Basics of Quantum Information</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
             </div>
-
-            <div class="cert fade" onclick="window.open('media/certificates/quantum1/IBM%20Quantum-Safe%20Conversations.pdf','_blank')">
-                <div class="cert-media"><div class="cert-art accent"><div class="big">Q</div><div class="sm">Quantum-Safe<br>Conversations</div></div></div>
-                <div class="cert-info"><div><h4>IBM Quantum-Safe Conversations</h4><div class="iss">IBM</div>
-                    <div class="cert-links"><a class="cert-link" href="media/certificates/quantum1/Quantum%20Business%20impact.pdf" target="_blank" onclick="event.stopPropagation()">Quantum Business Impact (PDF)</a></div></div><span class="cert-arrow">&nearr;</span></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+        </div>
+        <div class="deck-group fade">
+            <div class="deck-head"><span class="idx">02</span><h3>AI &amp; Innovation</h3><span class="cnt">5 &middot; all verified</span></div>
+            <div class="deck" data-deck>
+                <a class="card" href="https://www.credly.com/badges/3c15dc56-02b2-4551-9e45-6d2d8d116c87/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/ai-fundamentals.png" alt="Artificial Intelligence Fundamentals" loading="lazy"></div>
+                    <div class="card-info"><h4>Artificial Intelligence Fundamentals</h4><div class="iss">IBM SkillsBuild</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/10412b9e-7093-456a-84ae-1b35c42650a3/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/design-thinking-practitioner.png" alt="Enterprise Design Thinking Practitioner" loading="lazy"></div>
+                    <div class="card-info"><h4>Enterprise Design Thinking Practitioner</h4><div class="iss">IBM SkillsBuild</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/6d4820b9-a32f-4f8d-9391-279236d43ee0/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/garage-foundation.png" alt="IBM Garage Foundation" loading="lazy"></div>
+                    <div class="card-info"><h4>IBM Garage Foundation</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/30412fa2-65e3-4d0b-90c7-9b09f47dc850/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/garage-essentials.png" alt="IBM Garage Essentials" loading="lazy"></div>
+                    <div class="card-info"><h4>IBM Garage Essentials</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
+                <a class="card" href="https://www.credly.com/badges/eb513163-4682-4619-b15e-8106571275de/public_url" target="_blank" rel="noopener">
+                    <div class="card-media"><img src="media/certificates/badges/growth-behaviors.png" alt="IBM Growth Behaviors" loading="lazy"></div>
+                    <div class="card-info"><h4>IBM Growth Behaviors</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
+                </a>
             </div>
-
-            <div class="cert fade" onclick="openLightbox('media/certificates/ai1/artificial-intelligence-fundamentals.png','media/certificates/ai1/IBMDesign20250822-32-6fci3g.pdf','IBM AI Fundamentals')">
-                <div class="cert-media"><img src="media/certificates/ai1/artificial-intelligence-fundamentals.png" alt="IBM AI Fundamentals" loading="lazy"></div>
-                <div class="cert-info"><div><h4>Artificial Intelligence Fundamentals</h4><div class="iss">IBM</div></div><span class="cert-arrow">&nearr;</span></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+        </div>
+        <div class="deck-group fade">
+            <div class="deck-head"><span class="idx">03</span><h3>Cisco Black Belt</h3><span class="cnt">4 certificates</span></div>
+            <div class="deck" data-deck>
+                <a class="card" href="media/certificates/cisco%20zertifikate1/Black%20Belt%20AI%20Fundamentals%20Pre-Sales.png" data-lightbox="Black Belt AI Fundamentals Pre-Sales">
+                    <div class="card-media"><img src="media/certificates/cisco%20zertifikate1/Black%20Belt%20AI%20Fundamentals%20Pre-Sales.png" alt="Black Belt AI Fundamentals Pre-Sales" loading="lazy"></div>
+                    <div class="card-info"><h4>Black Belt AI Fundamentals Pre-Sales</h4><div class="iss">Cisco</div><span class="card-act">View certificate &nearr;</span></div>
+                </a>
+                <a class="card" href="media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Compute%20Sales%202.png" data-lightbox="Black Belt Data Center Compute Sales">
+                    <div class="card-media"><img src="media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Compute%20Sales%202.png" alt="Black Belt Data Center Compute Sales" loading="lazy"></div>
+                    <div class="card-info"><h4>Black Belt Data Center Compute Sales</h4><div class="iss">Cisco</div><span class="card-act">View certificate &nearr;</span></div>
+                </a>
+                <a class="card" href="media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Networking%20Sales.png" data-lightbox="Black Belt Data Center Networking Sales">
+                    <div class="card-media"><img src="media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Networking%20Sales.png" alt="Black Belt Data Center Networking Sales" loading="lazy"></div>
+                    <div class="card-info"><h4>Black Belt Data Center Networking Sales</h4><div class="iss">Cisco</div><span class="card-act">View certificate &nearr;</span></div>
+                </a>
+                <a class="card" href="media/certificates/cisco%20zertifikate1/Black%20Belt%20Devices%20Presales%20Stage%201.pdf" target="_blank" rel="noopener">
+                    <div class="card-media doc"><img src="media/certificates/badges/cisco-devices-presales.jpg" alt="Black Belt Devices Presales Stage 1" loading="lazy"></div>
+                    <div class="card-info"><h4>Black Belt Devices Presales Stage 1</h4><div class="iss">Cisco</div><span class="card-act">View certificate (PDF) &nearr;</span></div>
+                </a>
             </div>
-
-            <div class="cert fade" onclick="openLightbox('media/certificates/designthinking1/enterprise-design-thinking-practitioner.1.png','media/certificates/designthinking1/EnterpriseDesignThinkingPractitioner_Badge20250822-29-kjydyy.pdf','Enterprise Design Thinking Practitioner')">
-                <div class="cert-media"><img src="media/certificates/designthinking1/enterprise-design-thinking-practitioner.1.png" alt="Enterprise Design Thinking Practitioner" loading="lazy"></div>
-                <div class="cert-info"><div><h4>Enterprise Design Thinking Practitioner</h4><div class="iss">IBM</div></div><span class="cert-arrow">&nearr;</span></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+        </div>
+        <div class="deck-group fade">
+            <div class="deck-head"><span class="idx">04</span><h3>Business &amp; Quality</h3><span class="cnt">4 &middot; 1 verified</span></div>
+            <div class="deck" data-deck>
+                <a class="card" href="https://www.udemy.com/certificate/UC-ffc335f8-ff0f-4e59-835a-f822d4221310/" target="_blank" rel="noopener">
+                    <div class="card-media doc"><img src="media/certificates/badges/mba.jpg" alt="An Entire MBA in 1 Course" loading="lazy"></div>
+                    <div class="card-info"><h4>An Entire MBA in 1 Course</h4><div class="iss">Udemy</div><span class="card-act"><span class="vchk"></span>Verify on Udemy &nearr;</span></div>
+                </a>
+                <a class="card" href="media/certificates/qmcertificates/QMB_Saa_Peters_Nicolas_ZE_EN.pdf" target="_blank" rel="noopener">
+                    <div class="card-media doc"><img src="media/certificates/badges/qmb.jpg" alt="Quality Management Representative (QMR-T&Uuml;V)" loading="lazy"></div>
+                    <div class="card-info"><h4>Quality Management Representative (QMR-T&Uuml;V)</h4><div class="iss">T&Uuml;V S&Uuml;D Akademie</div><span class="card-act">View certificate (PDF) &nearr;</span></div>
+                </a>
+                <a class="card" href="media/certificates/qmcertificates/QMF_Saa_Peters_Nicolas_ZE_EN.pdf" target="_blank" rel="noopener">
+                    <div class="card-media doc"><img src="media/certificates/badges/qmf.jpg" alt="Quality Management Specialist (QMS-T&Uuml;V)" loading="lazy"></div>
+                    <div class="card-info"><h4>Quality Management Specialist (QMS-T&Uuml;V)</h4><div class="iss">T&Uuml;V S&Uuml;D Akademie</div><span class="card-act">View certificate (PDF) &nearr;</span></div>
+                </a>
+                <a class="card" href="media/certificates/qmcertificates/Auditgarant_Zertifikat_Nicolas_Peters%20Saa%20alle.pdf" target="_blank" rel="noopener">
+                    <div class="card-media doc"><img src="media/certificates/badges/auditgarant.jpg" alt="Auditgarant: medical device regulatory courses" loading="lazy"></div>
+                    <div class="card-info"><h4>Auditgarant: medical device regulatory courses</h4><div class="iss">Johner Institut</div><span class="card-act">View certificate (PDF) &nearr;</span></div>
+                </a>
             </div>
-
-            <div class="cert fade" onclick="openLightbox('media/certificates/cisco%20zertifikate1/Black%20Belt%20AI%20Fundamentals%20Pre-Sales.png',null,'Cisco Black Belt AI Fundamentals Pre-Sales')">
-                <div class="cert-media"><img src="media/certificates/cisco zertifikate1/Black Belt AI Fundamentals Pre-Sales.png" alt="Cisco Black Belt AI Fundamentals" loading="lazy"></div>
-                <div class="cert-info"><div><h4>Black Belt AI Fundamentals Pre-Sales</h4><div class="iss">CISCO</div></div><span class="cert-arrow">&nearr;</span></div>
-            </div>
-
-            <div class="cert fade" onclick="openLightbox('media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Compute%20Sales%202.png',null,'Cisco Black Belt Data Center Compute Sales')">
-                <div class="cert-media"><img src="media/certificates/cisco zertifikate1/Black Belt Data Center Compute Sales 2.png" alt="Cisco Black Belt Data Center Compute Sales" loading="lazy"></div>
-                <div class="cert-info"><div><h4>Black Belt Data Center Compute Sales</h4><div class="iss">CISCO</div></div><span class="cert-arrow">&nearr;</span></div>
-            </div>
-
-            <div class="cert fade" onclick="openLightbox('media/certificates/cisco%20zertifikate1/Black%20Belt%20Data%20Center%20Networking%20Sales.png',null,'Cisco Black Belt Data Center Networking Sales')">
-                <div class="cert-media"><img src="media/certificates/cisco zertifikate1/Black Belt Data Center Networking Sales.png" alt="Cisco Black Belt Data Center Networking Sales" loading="lazy"></div>
-                <div class="cert-info"><div><h4>Black Belt Data Center Networking Sales</h4><div class="iss">CISCO</div></div><span class="cert-arrow">&nearr;</span></div>
-            </div>
-
-            <div class="cert fade" onclick="window.open('media/certificates/cisco%20zertifikate1/Black%20Belt%20Devices%20Presales%20Stage%201.pdf','_blank')">
-                <div class="cert-media"><div class="cert-art dark"><div class="big">BB</div><div class="sm">Devices Presales<br>Stage 1</div></div></div>
-                <div class="cert-info"><div><h4>Black Belt Devices Presales Stage 1</h4><div class="iss">CISCO</div></div><span class="cert-arrow">&nearr;</span></div>
-            </div>
-
-            <div class="cert fade" onclick="window.open('media/certificates/mba1/MBA%202.pdf','_blank')">
-                <div class="cert-media"><div class="cert-art grey"><div class="big">MBA</div><div class="sm">Business<br>Fundamentals</div></div></div>
-                <div class="cert-info"><div><h4>MBA Course Certificate</h4><div class="iss">UDEMY</div></div><span class="cert-arrow">&nearr;</span></div>
-            </div>
-
-            <div class="cert fade" onclick="window.open('media/certificates/qmcertificates/Auditgarant_Zertifikat_Nicolas_Peters%20Saa%20alle.pdf','_blank')">
-                <div class="cert-media"><div class="cert-art grey"><div class="big">QMB</div><div class="sm">Quality Management<br>Representative &amp; Officer</div></div></div>
-                <div class="cert-info"><div><h4>QM Representative (QMB) &amp; QM Officer (QMF)</h4><div class="iss">AUDITGARANT</div>
-                    <div class="cert-links"><a class="cert-link" href="media/certificates/qmcertificates/QMB_Saa_Peters_Nicolas_ZE_EN.pdf" target="_blank" onclick="event.stopPropagation()">QMB</a><a class="cert-link" href="media/certificates/qmcertificates/QMF_Saa_Peters_Nicolas_ZE_EN.pdf" target="_blank" onclick="event.stopPropagation()">QMF</a><a class="cert-link" href="media/certificates/qmcertificates/Auditgarant_Zertifikat_Nicolas_Peters%20Saa%20alle.pdf" target="_blank" onclick="event.stopPropagation()">Full bundle</a></div></div><span class="cert-arrow">&nearr;</span></div>
-            </div>
-
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+        </div>
         </div>
     </div>
 </section>
@@ -947,6 +1034,78 @@ if (!reduced) {
     frame();
     setInterval(frame, 120);
 })();
+
+// =========================================================
+// QUANTUM: the three pills switch the text above them
+// =========================================================
+(function () {
+    const tabs = [...document.querySelectorAll('#quantum [role="tab"]')];
+    const select = tab => {
+        tabs.forEach(t => {
+            const on = t === tab;
+            t.setAttribute('aria-selected', on);
+            t.tabIndex = on ? 0 : -1;
+            document.getElementById(t.getAttribute('aria-controls')).classList.toggle('on', on);
+        });
+    };
+    tabs.forEach((t, i) => {
+        t.addEventListener('click', () => select(t));
+        t.addEventListener('keydown', e => {
+            const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+            if (!step) return;
+            const n = tabs[(i + step + tabs.length) % tabs.length];
+            select(n); n.focus();
+        });
+    });
+})();
+
+// =========================================================
+// CERTIFICATES: stacked decks, one per group
+// =========================================================
+document.querySelectorAll('[data-deck]').forEach(deck => {
+    const cards = [...deck.querySelectorAll('.card')];
+    const group = deck.closest('.deck-group');
+    const pos = group.querySelector('.deck-pos');
+    let order = cards.map((_, i) => i), busy = false, swiped = false;
+    const layout = () => {
+        order.forEach((ci, d) => {
+            const c = cards[ci];
+            c.style.setProperty('--d', Math.min(d, 3));
+            c.classList.toggle('top', d === 0);
+            c.classList.toggle('back', d > 0);
+            c.classList.toggle('hidden', d > 3);
+            c.tabIndex = d === 0 ? 0 : -1;
+            c.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
+        });
+        pos.textContent = (order[0] + 1) + ' / ' + cards.length;
+    };
+    const next = () => {
+        if (busy) return;
+        busy = true;
+        const top = cards[order[0]];
+        top.classList.add('out');
+        setTimeout(() => { order.push(order.shift()); top.classList.remove('out'); layout(); busy = false; }, reduced ? 0 : 260);
+    };
+    const prev = () => { order.unshift(order.pop()); layout(); };
+    group.querySelector('[data-next]').addEventListener('click', next);
+    group.querySelector('[data-prev]').addEventListener('click', prev);
+    cards.forEach(c => c.addEventListener('click', e => {
+        if (swiped) { e.preventDefault(); return; }
+        const d = order.indexOf(cards.indexOf(c));
+        if (d > 0) { e.preventDefault(); order = order.slice(d).concat(order.slice(0, d)); layout(); return; }
+        if (c.dataset.lightbox) { e.preventDefault(); openLightbox(c.getAttribute('href'), null, c.dataset.lightbox); }
+    }));
+    // swipe left/right on touch screens
+    let x0 = null, y0 = null;
+    deck.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; swiped = false; }, { passive: true });
+    deck.addEventListener('touchend', e => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { swiped = true; dx < 0 ? next() : prev(); setTimeout(() => { swiped = false; }, 400); }
+        x0 = null;
+    }, { passive: true });
+    layout();
+});
 
 // =========================================================
 // LIGHTBOX
