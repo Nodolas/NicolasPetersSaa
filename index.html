@@ -243,10 +243,10 @@
         .vchk { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); border: 1.5px solid var(--ink); display: inline-grid; place-items: center; flex: 0 0 auto; }
         .vchk::after { content: ''; width: 7px; height: 4px; border: solid var(--ink); border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
         .deck-groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 32px; }
-        .deck-head { display: flex; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
-        .deck-head h3 { font-weight: 700; letter-spacing: -0.02em; font-size: clamp(20px, 1.6vw, 24px); }
-        .deck-head .cnt { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
-        .deck { position: relative; aspect-ratio: 4 / 5; margin: 44px 30px 0 0; --off: 9px; --rot: 2.2deg; touch-action: pan-y; }
+        .deck-head { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 4px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 18px; margin-right: 30px; }
+        .deck-head h3 { font-weight: 700; letter-spacing: -0.02em; font-size: clamp(17px, 1.3vw, 20px); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .deck-head .cnt { grid-column: 2; font-size: 12px; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
+        .deck { position: relative; aspect-ratio: 3 / 4; margin: 44px 30px 0 0; --off: 9px; --rot: 2.2deg; touch-action: pan-y; }
         .deck:hover { --off: 14px; --rot: 3.4deg; }
         .card { position: absolute; inset: 0; display: flex; flex-direction: column; border: 1.5px solid var(--ink); border-radius: 18px; overflow: hidden; background: var(--bg);
             --d: 0; z-index: calc(20 - var(--d)); transform-origin: 50% 100%;
@@ -266,7 +266,8 @@
         .card-act { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12.5px; font-weight: 600; border-bottom: 1.5px solid var(--accent); }
         .card.top:hover .card-act { border-color: var(--ink); }
         .deck-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; margin-right: 30px; }
-        .deck-nav button { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--bg); color: var(--ink); font-size: 16px; cursor: pointer; transition: background .25s; }
+        .deck-nav button { width: 38px; height: 38px; padding: 0; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--bg); color: var(--ink); cursor: pointer; transition: background .25s; }
+        .deck-nav svg { width: 16px; height: 16px; display: block; }
         .deck-nav button:hover { background: var(--accent); }
         .deck-nav button:focus-visible, .card:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; }
         .deck-pos { font-size: 12px; font-weight: 600; letter-spacing: .1em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
@@ -336,7 +337,6 @@
            RESPONSIVE
            ========================================================= */
         @media (max-width: 1024px) {
-            .deck-groups { grid-template-columns: repeat(2, 1fr); gap: 56px 40px; }
             .stats { grid-template-columns: repeat(2, 1fr); }
             .stat:nth-child(2) { border-right: 0; }
             .stat:nth-child(3) { padding-left: 0; border-top: 1px solid var(--line); }
@@ -348,6 +348,10 @@
             .portrait { max-width: 420px; }
             .hero-photo { right: 8vw; height: 88vh; }
             .now-box { display: none; }
+        }
+        @media (max-width: 1279px) {
+            .deck-groups { grid-template-columns: repeat(2, 1fr); gap: 56px 40px; }
+            .deck-group { max-width: 460px; }
         }
         @media (max-width: 1100px) {
             #nav ul { position: fixed; top: 0; right: 0; height: 100vh; height: 100dvh; width: min(320px, 82vw); background: #fff; flex-direction: column; gap: 0; padding: 90px 28px; overflow-y: auto; transform: translateX(100%); visibility: hidden; transition: transform .4s var(--ease), visibility 0s .4s; box-shadow: -20px 0 60px -30px rgba(0,0,0,.25); }
@@ -377,7 +381,7 @@
             .fl-grid { grid-template-columns: 1fr; }
             .deck-groups { gap: 48px 28px; }
             .deck { margin: 38px 24px 0 0; --off: 7px; }
-            .deck-nav { margin-right: 24px; }
+            .deck-nav, .deck-head { margin-right: 24px; }
             .now-row { grid-template-columns: 1fr; gap: 8px; }
             .now-row .idx { order: -1; }
             #quantum { height: auto; min-height: 0; padding: 120px 0; }
@@ -620,7 +624,7 @@
                     <div class="card-info"><h4>Basics of Quantum Information</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
                 </a>
             </div>
-            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
         </div>
         <div class="deck-group fade">
             <div class="deck-head"><span class="idx">02</span><h3>AI &amp; Innovation</h3><span class="cnt">5 &middot; all verified</span></div>
@@ -646,7 +650,7 @@
                     <div class="card-info"><h4>IBM Growth Behaviors</h4><div class="iss">IBM</div><span class="card-act"><span class="vchk"></span>Verify on Credly &nearr;</span></div>
                 </a>
             </div>
-            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
         </div>
         <div class="deck-group fade">
             <div class="deck-head"><span class="idx">03</span><h3>Cisco Black Belt</h3><span class="cnt">4 certificates</span></div>
@@ -668,7 +672,7 @@
                     <div class="card-info"><h4>Black Belt Devices Presales Stage 1</h4><div class="iss">Cisco</div><span class="card-act">View certificate (PDF) &nearr;</span></div>
                 </a>
             </div>
-            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
         </div>
         <div class="deck-group fade">
             <div class="deck-head"><span class="idx">04</span><h3>Business &amp; Quality</h3><span class="cnt">4 &middot; 1 verified</span></div>
@@ -690,7 +694,7 @@
                     <div class="card-info"><h4>Auditgarant: medical device regulatory courses</h4><div class="iss">Johner Institut</div><span class="card-act">View certificate (PDF) &nearr;</span></div>
                 </a>
             </div>
-            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate">&larr;</button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate">&rarr;</button></div>
+            <div class="deck-nav"><button type="button" data-prev aria-label="Previous certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button><span class="deck-pos" aria-live="polite"></span><button type="button" data-next aria-label="Next certificate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
         </div>
         </div>
     </div>
