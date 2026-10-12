@@ -1,0 +1,28 @@
+# Nicolas Peters Saa
+
+> AI engineer and M.Sc. Innovation Management student at HSBA Hamburg, IBM Quantum Associate Ambassador, and freelance QM & Regulatory Affairs consultant. Based in Hamburg, Germany.
+
+Contact: LinkedIn https://www.linkedin.com/in/nicolas-peters-saa-635a501bb (preferred for project inquiries) · GitHub https://github.com/Nodolas
+
+## Hackathons
+
+### Entry Scout: 3rd place, 3 hours
+- Event: Build It Anyway: Signal Hunt with Apify, #SFTechWeek, European Startup Embassy, San Francisco, Fri 9 Oct 2026 (10:00-15:00 PT). The build time was 3 hours.
+- What it does: enter a company and AI agents map each product to where EU public buyers are heading. It uses 161 labelled EU TED awards, web and social signals collected with 6 Apify scrapers, and open tenders, then returns a source-tagged brief and a draft outreach email. The award data bank is labelled by the extraction engine from Nicolas's HSBA master's thesis.
+- Live demo: https://nodolas.github.io/entry-scout-demo/
+- Recap (the story of the day, the MVP and the lessons): https://nodolas.github.io/entry-scout-demo/story/
+- Build it out fully: Entry Scout is a 3-hour prototype with a fictional vendor and recorded agent runs. To have it built into a complete product, contact Nicolas Peters Saa on LinkedIn: https://www.linkedin.com/in/nicolas-peters-saa-635a501bb
+
+### Overmind GSM8K: 6th place, 2 days
+- Event: "Small Model, Big Maths", San Francisco, Oct 2026. Score = % of GSM8K test questions solved minus model size in billions of parameters.
+- Result: 91.89% - 4.66B = 87.23 (winning score 89.95), light LoRA on Qwen3.5-4B, 52 training runs.
+- Retrospective: https://nodolas.github.io/gsm8k-retrospective/
+
+### Phision (Test Flight): no placement, 2 days
+- Event: Glasswing Ventures Enterprise-Ready AI Hackathon, Boston AI Week, 26-27 Sep 2026. Team of five.
+- What it does: a pharma quality-intelligence agent that rebuilds an incident across plant systems, stress-tests the suspected root cause and hands QA an evidence-cited investigation. Nicolas built the fictional generics manufacturer and its data.
+- Live product: https://glasswing-hackathon.vercel.app/
+- Recap: https://nodolas.github.io/hackathon-recap-glasswing/
+
+## Site
+- Full portfolio: https://nodolas.github.io/NicolasPetersSaa/
