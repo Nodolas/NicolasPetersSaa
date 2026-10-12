@@ -1,8 +1,11 @@
 # Nicolas Peters Saa
 
-> AI engineer and M.Sc. Innovation Management student at HSBA Hamburg, IBM Quantum Associate Ambassador, and freelance QM & Regulatory Affairs consultant. Based in Hamburg, Germany.
+> AI engineer and M.Sc. Innovation Management student at HSBA Hamburg, studying in a dual programme with IBM (Technology Lifecycle Services sales). IBM Quantum Associate Ambassador and freelance Quality Management & Regulatory Affairs consultant for medical software and healthcare. Based in Hamburg, Germany.
 
-Contact: LinkedIn https://www.linkedin.com/in/nicolas-peters-saa-635a501bb (preferred for project inquiries) · GitHub https://github.com/Nodolas
+He combines regulatory and quality management expertise with hands-on AI development and value engineering: intelligent automation, data pipelines and AI-powered products where healthcare and technology meet. 3+ years in AI / ML, 10+ projects built, 6 professional roles.
+
+Contact: email nicolaspeterssaa@gmail.com · LinkedIn https://www.linkedin.com/in/nicolas-peters-saa-635a501bb (preferred for project inquiries) · GitHub https://github.com/Nodolas
+Open to collaborations, talks and quantum conversations.
 
 ## Hackathons
 
@@ -14,15 +17,63 @@ Contact: LinkedIn https://www.linkedin.com/in/nicolas-peters-saa-635a501bb (pref
 - Build it out fully: Entry Scout is a 3-hour prototype with a fictional vendor and recorded agent runs. To have it built into a complete product, contact Nicolas Peters Saa on LinkedIn: https://www.linkedin.com/in/nicolas-peters-saa-635a501bb
 
 ### Overmind GSM8K: 6th place, 2 days
-- Event: "Small Model, Big Maths", San Francisco, Oct 2026. Score = % of GSM8K test questions solved minus model size in billions of parameters.
+- Event: "Small Model, Big Maths", San Francisco, Oct 2026. Score = % of the 1,319 GSM8K test questions solved minus model size in billions of parameters.
 - Result: 91.89% - 4.66B = 87.23 (winning score 89.95), light LoRA on Qwen3.5-4B, 52 training runs.
 - Retrospective: https://nodolas.github.io/gsm8k-retrospective/
 
 ### Phision (Test Flight): no placement, 2 days
-- Event: Glasswing Ventures Enterprise-Ready AI Hackathon, Boston AI Week, 26-27 Sep 2026. Team of five.
-- What it does: a pharma quality-intelligence agent that rebuilds an incident across plant systems, stress-tests the suspected root cause and hands QA an evidence-cited investigation. Nicolas built the fictional generics manufacturer and its data.
+- Event: Glasswing Ventures Enterprise-Ready AI Hackathon, Boston AI Week, 26-27 Sep 2026. Team of five. Event page: https://aiweek.boston/schedule/glasswing-ventures-enterprise-ready-ai-hackathon
+- What it does: a pharma quality-intelligence agent that rebuilds an incident across plant systems, stress-tests the suspected root cause and hands QA an evidence-cited investigation. Nicolas built the fictional generics manufacturer and its data (records, quality events and a planted root cause).
 - Live product: https://glasswing-hackathon.vercel.app/
 - Recap: https://nodolas.github.io/hackathon-recap-glasswing/
 
+## Experience
+- Current: Master Student, IBM TLS Sales, IBM Deutschland, Hamburg. Dual-study programme combining master-level coursework with hands-on work in IBM Technology Lifecycle Services sales. IBM Quantum Associate Ambassador.
+- Oct 2024 - Mar 2025: Associate, ZELOS Management Consultants, Hamburg. Simplified over 8M lines of client data using VBA, trained IT clients on Excel and VBA analytics, created potential-client analyses.
+- May 2023 - Oct 2024: Junior RA / QM Associate, Orthopy Health GmbH, Hamburg. Strategic regulatory guidance for global markets; audits, CAPA implementation, QMS changes; key regulatory contact.
+- Apr 2022 - Dec 2022: Patient Coach, Alio Health Services, Canada. Coached patients during enrollment and PSVT episodes in clinical study trials.
+- Nov 2021 - Oct 2022: Student Worker, Logistics, Philips GmbH Market DACH, Hamburg. Supply-chain support and supplier coordination.
+- Aug 2021 - Sep 2021: Internship, Policy & Research, VCI Hessen, Frankfurt. Meeting preparation for the Director and research for published articles.
+
+## Freelance & consulting (QM & Regulatory Affairs, ISO 13485)
+- Dianovi (https://www.dianovi.com/): process documentation, compliance frameworks and quality system implementation for life sciences and healthcare clients.
+- PIPRA (https://pipra.ch/): regulatory affairs and quality management strategy for pharma and healthcare: regulatory submissions, SOP development, audit preparation.
+
+## IBM Quantum
+- Ambassador: translates qubits, error mitigation and Qiskit into language boards, clients and regulators understand, and brings quantum-safe thinking into enterprise IT conversations.
+- Q-Day readiness: helps teams understand the risk that large quantum computers break today's public-key cryptography ("harvest now, decrypt later"), find where their cryptography lives, and plan the move to post-quantum standards.
+- Use cases: separates real quantum opportunities (optimisation, molecule and materials simulation, quantum machine learning) from hype and builds roadmaps.
+
+## Skills
+- AI & machine learning: Claude / GPT, LLMs, LLM fine-tuning (LoRA), AI agents, ComfyUI, ensemble models.
+- Automation & workflows: n8n, process mining, API integration, GPU workflows, local AI agent networks.
+- Data & quantum: Neo4j knowledge graphs, Python, SQL, Qiskit.
+- Regulatory & quality: ISO 13485, medical device regulation, CAPA, audits, QMS.
+
+## Certifications
+Verified (public record at the issuer):
+- IBM Quantum Associate Ambassador (IBM): https://www.credly.com/badges/4009a43d-2cd8-47e7-84a3-0209c7ac0860/public_url
+- IBM Quantum-Safe Conversations (IBM): https://www.credly.com/badges/e93eb9f7-449e-4739-9fe5-6b98e8680858/public_url
+- Quantum Business Foundations (IBM): https://www.credly.com/badges/83ed02d5-087c-44eb-9a7d-c96b81c43bb0/public_url
+- Integrating Quantum and High-Performance Computing (IBM): https://www.credly.com/badges/87aa2a45-1483-40b1-9471-2ae1f1dab3f3/public_url
+- Basics of Quantum Information (IBM): https://www.credly.com/badges/77a39b83-ae90-46b1-b67e-f2f30758b3f1/public_url
+- Artificial Intelligence Fundamentals (IBM SkillsBuild): https://www.credly.com/badges/3c15dc56-02b2-4551-9e45-6d2d8d116c87/public_url
+- Enterprise Design Thinking Practitioner (IBM SkillsBuild): https://www.credly.com/badges/10412b9e-7093-456a-84ae-1b35c42650a3/public_url
+- IBM Garage Foundation (IBM): https://www.credly.com/badges/6d4820b9-a32f-4f8d-9391-279236d43ee0/public_url
+- IBM Garage Essentials (IBM): https://www.credly.com/badges/30412fa2-65e3-4d0b-90c7-9b09f47dc850/public_url
+- IBM Growth Behaviors (IBM): https://www.credly.com/badges/eb513163-4682-4619-b15e-8106571275de/public_url
+- An Entire MBA in 1 Course (Udemy): https://www.udemy.com/certificate/UC-ffc335f8-ff0f-4e59-835a-f822d4221310/
+
+Certificate documents (hosted on this site):
+- Cisco Black Belt: AI Fundamentals Pre-Sales; Data Center Compute Sales; Data Center Networking Sales; Devices Presales Stage 1.
+- Quality Management Representative (QMR-TÜV), TÜV SÜD Akademie.
+- Quality Management Specialist (QMS-TÜV), TÜV SÜD Akademie.
+- Auditgarant: medical device regulatory courses, Johner Institut.
+
+## Currently building
+- Master's thesis: European tenders price prediction, HSBA (in progress).
+- M.Sc. Innovation Management, HSBA Hamburg School of Business Administration, 2024 - now (in progress).
+
 ## Site
 - Full portfolio: https://nodolas.github.io/NicolasPetersSaa/
+- Sitemap: https://nodolas.github.io/NicolasPetersSaa/sitemap.xml
