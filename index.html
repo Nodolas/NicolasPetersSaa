@@ -201,10 +201,16 @@
         .exp-track { display: flex; gap: 24px; padding: 0 var(--gutter); will-change: transform; }
         .exp-card { flex: 0 0 auto; width: min(520px, 78vw); min-height: 56vh; border: 1.5px solid var(--ink); border-radius: 18px; padding: 32px; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg); transition: box-shadow .35s; }
         .exp-card:hover { box-shadow: 8px 8px 0 var(--accent); }
+        /* logo pinned under the top row, text pushed to the bottom, so every logo sits at the same height */
+        .exp-card > div:last-child { flex: 1; display: flex; flex-direction: column; align-items: flex-start; }
+        .exp-card > div:last-child .exp-title { margin-top: auto; padding-top: 22px; }
         .exp-top { display: flex; justify-content: space-between; align-items: flex-start; }
         .exp-top .label { display: inline-flex; align-items: center; gap: 8px; }
         .exp-top .live { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--ink); animation: pulse 1.8s infinite; }
-        .exp-title { font-family: var(--display); text-transform: uppercase; font-weight: 400; line-height: .95; font-size: clamp(34px, 3.4vw, 54px); margin-top: 60px; }
+        .exp-logo { display: inline-flex; align-items: center; justify-content: center; height: 84px; min-width: 84px; padding: 12px; margin-top: 40px; background: #fff; border: 1.5px solid var(--ink); border-radius: 16px; }
+        .exp-logo img { display: block; height: 100%; width: auto; max-width: 180px; object-fit: contain; }
+        .exp-logo.wide { padding: 20px 22px; }
+        .exp-title { font-family: var(--display); text-transform: uppercase; font-weight: 400; line-height: .95; font-size: clamp(34px, 3.4vw, 54px); margin-top: 22px; }
         .exp-co { color: var(--ink-2); font-size: 15px; margin-top: 10px; font-weight: 500; }
         .exp-co a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
         .exp-co a:hover, .exp-co a:focus-visible { color: var(--accent-deep); text-decoration-color: currentColor; }
@@ -227,6 +233,12 @@
            FREELANCE
            ========================================================= */
         #freelance { background: var(--bg-2); }
+        #hackathons .fl-card { background: var(--bg-2); }
+        .fl-card .stats { display: flex; flex-wrap: wrap; gap: 16px 28px; margin-top: 18px; }
+        .fl-card p.score-note { font-size: 13px; margin-top: 10px; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--bg); border-radius: 0 8px 8px 0; }
+        .fl-card p.score-note b { color: var(--ink); }
+        .fl-card .stats b { display: block; font-family: var(--display); font-size: 30px; font-weight: 400; line-height: 1; }
+        .fl-card .stats span { color: var(--ink-2); font-size: 12px; }
         .fl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .fl-card { background: var(--bg); border: 1.5px solid var(--ink); border-radius: 18px; padding: 34px; transition: transform .35s var(--ease), box-shadow .35s; }
         .fl-card:hover { transform: translateY(-4px); box-shadow: 8px 8px 0 var(--accent); }
@@ -378,7 +390,8 @@
             .exp-viewport { height: auto; display: block; padding-bottom: 60px; }
             .exp-track { flex-direction: column; padding: 0 20px; transform: none !important; }
             .exp-card { width: 100%; min-height: 0; }
-            .exp-title { margin-top: 30px; }
+            .exp-logo { margin-top: 26px; height: 68px; min-width: 68px; }
+            .exp-title, .exp-card > div:last-child .exp-title { padding-top: 18px; }
             .exp-end { display: none; }
             .fl-grid { grid-template-columns: 1fr; }
             .deck-groups { gap: 48px 28px; }
@@ -422,6 +435,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#freelance">Freelance</a></li>
+        <li><a href="#hackathons">Hackathons</a></li>
         <li><a href="#certifications">Certifications</a></li>
         <li><a href="#now">Now</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -534,27 +548,27 @@
         <div class="exp-track" id="exp-track">
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">01</span><span class="label"><span class="live"></span>Current</span></div>
-                <div><h3 class="exp-title">Master Student, IBM TLS Sales</h3><div class="exp-co"><a href="https://www.ibm.com/de-de" target="_blank" rel="noopener">IBM Deutschland</a> &middot; Hamburg</div><p class="exp-desc">Dual-study programme combining master-level coursework with hands-on work in IBM Technology Lifecycle Services sales. IBM Quantum Associate Ambassador.</p></div>
+                <div><span class="exp-logo wide"><img src="media/logos/ibm.svg" alt="IBM logo" loading="lazy"></span><h3 class="exp-title">Master Student, IBM TLS Sales</h3><div class="exp-co"><a href="https://www.ibm.com/de-de" target="_blank" rel="noopener">IBM Deutschland</a> &middot; Hamburg</div><p class="exp-desc">Dual-study programme combining master-level coursework with hands-on work in IBM Technology Lifecycle Services sales. IBM Quantum Associate Ambassador.</p></div>
             </article>
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">02</span><span class="label">Oct 2024 &ndash; Mar 2025</span></div>
-                <div><h3 class="exp-title">Associate</h3><div class="exp-co"><a href="https://www.zelos.consulting" target="_blank" rel="noopener">ZELOS Management Consultants</a> &middot; Hamburg</div><p class="exp-desc">Simplified over 8M lines of client data using VBA. Instructed IT clients on Excel and VBA analytics. Created potential-client analyses for ZELOS.</p></div>
+                <div><span class="exp-logo"><img src="media/logos/zelos.png" alt="ZELOS logo" loading="lazy"></span><h3 class="exp-title">Associate</h3><div class="exp-co"><a href="https://www.zelos.consulting" target="_blank" rel="noopener">ZELOS Management Consultants</a> &middot; Hamburg</div><p class="exp-desc">Simplified over 8M lines of client data using VBA. Instructed IT clients on Excel and VBA analytics. Created potential-client analyses for ZELOS.</p></div>
             </article>
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">03</span><span class="label">May 2023 &ndash; Oct 2024</span></div>
-                <div><h3 class="exp-title">Junior RA / QM Associate</h3><div class="exp-co"><a href="https://orthopy.de" target="_blank" rel="noopener">Orthopy Health GmbH</a> &middot; Hamburg</div><p class="exp-desc">Strategic regulatory guidance for global markets. Audits, CAPA implementation, QMS changes, and key regulatory contact.</p></div>
+                <div><span class="exp-logo"><img src="media/logos/orthopy.png" alt="Orthopy logo" loading="lazy"></span><h3 class="exp-title">Junior RA / QM Associate</h3><div class="exp-co"><a href="https://orthopy.de" target="_blank" rel="noopener">Orthopy Health GmbH</a> &middot; Hamburg</div><p class="exp-desc">Strategic regulatory guidance for global markets. Audits, CAPA implementation, QMS changes, and key regulatory contact.</p></div>
             </article>
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">04</span><span class="label">Apr 2022 &ndash; Dec 2022</span></div>
-                <div><h3 class="exp-title">Patient Coach</h3><div class="exp-co"><a href="https://www.aliohealth.com" target="_blank" rel="noopener">Alio Health Services</a> &middot; Canada</div><p class="exp-desc">Coached patients during enrollment and PSVT episodes in clinical study trials.</p></div>
+                <div><span class="exp-logo"><img src="media/logos/alio.png" alt="Alio logo" loading="lazy"></span><h3 class="exp-title">Patient Coach</h3><div class="exp-co"><a href="https://www.aliohealth.com" target="_blank" rel="noopener">Alio Health Services</a> &middot; Canada</div><p class="exp-desc">Coached patients during enrollment and PSVT episodes in clinical study trials.</p></div>
             </article>
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">05</span><span class="label">Nov 2021 &ndash; Oct 2022</span></div>
-                <div><h3 class="exp-title">Student Worker, Logistics</h3><div class="exp-co"><a href="https://www.philips.de" target="_blank" rel="noopener">Philips GmbH Market DACH</a> &middot; Hamburg</div><p class="exp-desc">Managed tasks for supply-chain support workers and coordinated with suppliers for timely delivery resolution.</p></div>
+                <div><span class="exp-logo"><img src="media/logos/philips.png" alt="Philips logo" loading="lazy"></span><h3 class="exp-title">Student Worker, Logistics</h3><div class="exp-co"><a href="https://www.philips.de" target="_blank" rel="noopener">Philips GmbH Market DACH</a> &middot; Hamburg</div><p class="exp-desc">Managed tasks for supply-chain support workers and coordinated with suppliers for timely delivery resolution.</p></div>
             </article>
             <article class="exp-card">
                 <div class="exp-top"><span class="idx">06</span><span class="label">Aug 2021 &ndash; Sep 2021</span></div>
-                <div><h3 class="exp-title">Internship, Policy &amp; Research</h3><div class="exp-co"><a href="https://www.vci.de/hessen/startseite.jsp" target="_blank" rel="noopener">VCI Hessen</a> &middot; Frankfurt</div><p class="exp-desc">Assisted the Director in meeting preparation and contributed research findings to published articles.</p></div>
+                <div><span class="exp-logo"><img src="media/logos/vci.png" alt="VCI logo" loading="lazy"></span><h3 class="exp-title">Internship, Policy &amp; Research</h3><div class="exp-co"><a href="https://www.vci.de/hessen/startseite.jsp" target="_blank" rel="noopener">VCI Hessen</a> &middot; Frankfurt</div><p class="exp-desc">Assisted the Director in meeting preparation and contributed research findings to published articles.</p></div>
             </article>
             <div class="exp-end"></div>
         </div>
@@ -591,6 +605,32 @@
                 <a class="url" href="https://pipra.ch/" target="_blank" rel="noopener">pipra.ch &nearr;</a>
                 <p>Regulatory affairs consulting and quality management strategy for pharmaceutical and healthcare sectors: regulatory submissions, SOP development and audit preparation.</p>
                 <div class="tags"><span class="tag">Quality Management</span><span class="tag">Regulatory Affairs</span><span class="tag">ISO 13485</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ HACKATHONS ============ -->
+<section id="hackathons">
+    <div class="wrap">
+        <div class="sec-head fade"><h2>Hackathons taken part in</h2><p>Time-boxed builds and competitions, each with a write-up of what worked and what didn&rsquo;t.</p></div>
+        <div class="fl-grid">
+            <div class="fl-card fade">
+                <div class="co">Overmind GSM8K</div>
+                <div class="role">6TH PLACE &middot; &ldquo;SMALL MODEL, BIG MATHS&rdquo; &middot; SAN FRANCISCO &middot; OCT 2026</div>
+                <a class="url" href="https://nodolas.github.io/gsm8k-retrospective/" target="_blank" rel="noopener">Read the retrospective &nearr;</a>
+                <p>Model-training hackathon: maximise GSM8K accuracy minus model size. Finished 6th with a light LoRA on Qwen3.5-4B; the write-up covers all 52 training runs, the leaderboard and the lessons learned.</p>
+                <p class="score-note"><b>Score</b> = % of the 1,319 GSM8K test questions solved &minus; model size in billions of parameters. Mine: 91.89&thinsp;% &minus; 4.66&thinsp;B = 87.23.</p>
+                <div class="stats"><div><b>6th</b><span>Place on the leaderboard</span></div><div><b>87.23</b><span>Final score</span></div><div><b>89.95</b><span>Winning score</span></div><div><b>52</b><span>Training runs</span></div></div>
+                <div class="tags"><span class="tag">LLM Fine-tuning</span><span class="tag">LoRA</span><span class="tag">Qwen</span><span class="tag">Python</span></div>
+            </div>
+            <div class="fl-card fade">
+                <div class="co">Entry Scout</div>
+                <div class="role">3RD PLACE &middot; BUILD IT ANYWAY: SIGNAL HUNT WITH APIFY &middot; #SFTECHWEEK &middot; SAN FRANCISCO &middot; OCT 2026</div>
+                <a class="url" href="https://nodolas.github.io/entry-scout-demo/" target="_blank" rel="noopener">Try the live demo &nearr;</a>
+                <p>One-day signal-hunting hackathon at the European Startup Embassy, powered by Apify. Finished 3rd. Enter a company and agents map each product to where EU public buyers are heading, using labelled TED awards, web and social signals and open tenders, then return a source-tagged brief and a draft outreach email. The award data bank is labelled by the extraction engine from my HSBA master&rsquo;s thesis.</p>
+                <div class="stats"><div><b>3rd</b><span>Place overall</span></div><div><b>161</b><span>Labelled EU awards</span></div><div><b>6</b><span>Apify scrapers</span></div></div>
+                <div class="tags"><span class="tag">AI Agents</span><span class="tag">Claude</span><span class="tag">Apify</span><span class="tag">TED Tenders</span></div>
             </div>
         </div>
     </div>
@@ -707,10 +747,8 @@
     <div class="wrap">
         <div class="sec-head fade"><h2>Currently building</h2><p>Projects and studies in progress. Always something in superposition.</p></div>
         <div class="now-list">
-            <div class="now-row fade"><span class="idx">01</span><h4>n8n Automation Workflows</h4><p>Local AI agent networks, GPU integration and Neo4j process mining.</p><span class="status done"><i></i>Complete</span></div>
-            <div class="now-row fade"><span class="idx">02</span><h4>Trading Prediction Engine</h4><p>AI-powered prediction system using ensemble models.</p><span class="status"><i></i>In progress</span></div>
-            <div class="now-row fade"><span class="idx">03</span><h4>Master Thesis</h4><p>European tenders price prediction, HSBA.</p><span class="status"><i></i>In progress</span></div>
-            <div class="now-row fade"><span class="idx">04</span><h4>M.Sc. Innovation Management</h4><p>HSBA Hamburg School of Business Administration.</p><span class="status"><i></i>In progress</span></div>
+            <div class="now-row fade"><span class="idx">01</span><h4>Master Thesis</h4><p>European tenders price prediction, HSBA.</p><span class="status"><i></i>In progress</span></div>
+            <div class="now-row fade"><span class="idx">02</span><h4>M.Sc. Innovation Management</h4><p>HSBA Hamburg School of Business Administration.</p><span class="status"><i></i>In progress</span></div>
         </div>
     </div>
 </section>
